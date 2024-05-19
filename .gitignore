@@ -1,0 +1,15 @@
+*.aux
+*.bcf
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.synctex.gz (busy)
+*.toc
+pdfa.xmpi
+*.bbl
+*.blg
+
+**/.DS_Store

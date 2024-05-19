@@ -122,6 +122,7 @@
 %% Images
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{plantuml}
 
 %% Document information
 \title{Telecommunication Systems}
@@ -1636,6 +1637,37 @@ For example, for the network shown in figure \ref{fig:unit2_routing_example}, ro
 		Routing example
 	}
 \end{figure}
+
+\begin{plantuml}
+  @startuml
+  Alice -> Bob: Hello
+  Alice <- Bob: Hi!
+  @enduml
+\end{plantuml}
+
+\subsubsection{Resultant traffic}
+
+In order to obtain the offered traffic in a HU, we must apply a recursive algorithm:
+
+General method for counting when routing
+
+$$
+	AB_{total} = AB (N_A \cdot N_B) - \sum_X AX (N_A \cdot N_X) - \sum_{C, Y} CY_{total} + \sum_{C, Y} CY_o (1)
+$$
+
+Where:
+
+\begin{itemize}
+	\item $AB_{total}$: Number of elements to compute traffic in the HU that connects A and B.
+	\item $AB$: Size of the set with all the combinations of elements from A tree and B tree.
+	\item $AB_o$: Element that indicates the traffic resulting from overflow in the HU that connects A and B.
+\end{itemize}
+
+\begin{enumerate}
+	\item {
+		Traffic from A
+	}
+\end{enumerate}
 
 \subsubsection{Concepts}
 

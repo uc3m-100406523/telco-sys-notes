@@ -11,5 +11,6 @@
 pdfa.xmpi
 *.bbl
 *.blg
+*.pytxcode
 
 **/.DS_Store

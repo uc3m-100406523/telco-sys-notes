@@ -1,16 +1,18 @@
 *.aux
+*.bbl
 *.bcf
+*.blg
+*.cut
 *.lof
 *.log
 *.lot
 *.out
+*.pytxcode
 *.run.xml
+*.synctex
 *.synctex.gz
 *.synctex.gz(busy)
 *.toc
 pdfa.xmpi
-*.bbl
-*.blg
-*.pytxcode
 
 **/.DS_Store

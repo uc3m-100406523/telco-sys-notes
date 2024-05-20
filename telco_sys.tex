@@ -1638,12 +1638,49 @@ For example, for the network shown in figure \ref{fig:unit2_routing_example}, ro
 	}
 \end{figure}
 
-\begin{plantuml}
-  @startuml
-  Alice -> Bob: Hello
-  Alice <- Bob: Hi!
-  @enduml
-\end{plantuml}
+\begin{tikzpicture}[
+  level distance=1.5cm,
+  level 1/.style={sibling distance=4cm},
+  level 2/.style={sibling distance=2cm},
+  level 3/.style={sibling distance=1cm},
+  level 4/.style={sibling distance=0.5cm},
+  every node/.style={circle,draw}
+  ]
+
+% Root node
+\node (n1) {1}
+% Level 1
+  child {node (n2) {2}
+    % Level 2
+    child {node (n4) {4}
+      % Level 3
+      child {node (n8) {8}}
+      child {node (n9) {9}}
+    }
+    child {node (n5) {5}
+      % Level 3
+      child {node (n10) {10}}
+      child {node (n11) {11}}
+    }
+  }
+  child {node (n3) {3}
+    % Level 2
+    child {node (n6) {6}
+      % Level 3
+      child {node (n12) {12}}
+      child {node (n13) {13}}
+    }
+    child {node (n7) {7}
+      % Level 3
+      child {node (n14) {14}}
+      child {node (n15) {15}}
+    }
+  };
+
+% Dotted line between nodes 2 and 6
+\draw[dotted] (n2) -- (n6);
+
+\end{tikzpicture}
 
 \subsubsection{Resultant traffic}
 

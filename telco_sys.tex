@@ -1638,6 +1638,10 @@ For example, for the network shown in figure \ref{fig:unit2_routing_example}, ro
 	}
 \end{figure}
 
+\subsubsection{Resultant traffic in HU}
+
+\paragraph{Scheme}
+
 \begin{tikzpicture}[
   level distance=1.5cm,
   level 1/.style={sibling distance=4cm},
@@ -1682,11 +1686,13 @@ For example, for the network shown in figure \ref{fig:unit2_routing_example}, ro
 
 \end{tikzpicture}
 
-\subsubsection{Resultant traffic}
+\paragraph{Traffic calculation}
+
+AAAAAA
+
+\paragraph{Counting method}
 
 In order to obtain the offered traffic in a HU, we must apply a recursive algorithm:
-
-General method for counting when routing
 
 $$
 	AB_{total} = AB (N_A \cdot N_B) - \sum_X AX (N_A \cdot N_X) - \sum_{C, Y} CY_{total} + \sum_{C, Y} CY_o (1)

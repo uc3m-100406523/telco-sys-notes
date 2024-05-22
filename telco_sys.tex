@@ -1638,10 +1638,11 @@ For example, for the network shown in figure \ref{fig:unit2_routing_example}, ro
 	}
 \end{figure}
 
-\subsubsection{Resultant traffic in HU}
+\subsubsection{Resultant traffic due to usage HU}
 
-\paragraph{Scheme}
+Due to the usage of HU, the resultant traffic both in HU and in FU is complex to estimate. The following scheme presents the different situations we will study:
 
+\iffalse
 \begin{tikzpicture}[
   level distance=1.5cm,
   level 1/.style={sibling distance=4cm},
@@ -1685,32 +1686,137 @@ For example, for the network shown in figure \ref{fig:unit2_routing_example}, ro
 \draw[dotted] (n2) -- (n6);
 
 \end{tikzpicture}
+\fi
 
-\paragraph{Traffic calculation}
+\begin{figure}[H]
+	\centering
+	\includegraphics[
+		width=12cm,
+		%height=15cm
+	]{Imágenes/Tema 2/network_scheme.jpg}
+	\caption{
+		\label{fig:unit2_network_scheme}
+		Network scheme.
+	}
+\end{figure}
 
-AAAAAA
+Here, in order to study HU between $A$ and $X$ we can distinguish:
+\begin{itemize}
+	\item Common HU ($AX$): Connects tree $A$ with tree $X$.
+	\item Alternative HU ($AY$): Connects tree $A$ with tree $Y$ (a subtree from tree $X$), avoiding traffic going to $AX$.
+	\item Lower hierarchy node with no alternative HU ($B$, $Z$): Always sends its traffic to $AX$/$XA$.
+	\item Lower hierarchy node with alternative HU ($CD$): Traffic from $C$ to upper $D$ is send to $AX$ always; traffic from $C$ to lower $D$ is sent to $AX$ when saturation in HU.
+\end{itemize}
 
-\paragraph{Counting method}
-
-In order to obtain the offered traffic in a HU, we must apply a recursive algorithm:
+\iffalse
+Traffic calculation blablabla:
 
 $$
-	AB_{total} = AB (N_A \cdot N_B) - \sum_X AX (N_A \cdot N_X) - \sum_{C, Y} CY_{total} + \sum_{C, Y} CY_o (1)
+	OT_{AX} = \sum_{AX} OT_{AX, own} + P_o \cdot \sum_{C, D} OT_{CD}
+$$
+\fi
+
+In order to obtain the compute traffic at HU or FU we will use a recursive counting method to obtain all the components of the resultant traffic.
+
+\paragraph{Traffic at HU}
+
+The traffic at a HU can be computed in the following steps:
+\begin{enumerate}
+	\item Add the traffic from each node in tree $A$ to each node in tree $X$.
+	\item Subtract the traffic that will be assisted by another HU ($alt$) connected to $A$.
+	\item Subtract the traffic that will be assisted by another HU connected to a node from tree $A$, at a lower hierarchy.
+	\item Add the traffic resulted by overflow ($o$) of previous HU connected to a node from tree $A$, at a lower hierarchy.
+\end{enumerate}
+
+The counting method to obtain the components for calculation will be:
+
+$$
+	AX_{total} = AX (N_A \cdot N_X) - \sum_Y AY_{alt} (N_A \cdot N_{YnoA}) + \sum_{C, D} \left( - CD_{alt} + CD_o (1) \right)
 $$
 
 Where:
 
 \begin{itemize}
-	\item $AB_{total}$: Number of elements to compute traffic in the HU that connects A and B.
-	\item $AB$: Size of the set with all the combinations of elements from A tree and B tree.
-	\item $AB_o$: Element that indicates the traffic resulting from overflow in the HU that connects A and B.
+	\item $AX (N_A \cdot N_X) \rightarrow$ Traffic from each node in tree $A$ to each node in tree $X$.
+	\item $\sum_Y AY_{alt} (N_A \cdot N_{YnoA}) \rightarrow$ Traffic that will be assisted by another HU connected to $A$.
+	\item $\sum_{C, D} CD_{alt} \rightarrow$ Traffic that will be assisted by another HU connected to a node from tree $A$.
+	\item $\sum_{C, D} CD_o (1) \rightarrow$ Traffic resulted by overflow of a HU connected to a node from tree $A$.
 \end{itemize}
 
+\iffalse
+$$
+	AX_{total} =
+		\underset
+			{\text{Traffic from each node in A to each node in B}}
+			{\underbrace{AX (N_A \cdot N_X)}}
+		\underset
+			{\text{Iterations with alternative HUs}}
+			{\underbrace{- \sum_Y AY_{alt} (N_A \cdot N_{YnoA})}}
+		\underset
+			{\text{Iterations with overflowing HUs}}
+			{\underbrace{+ \sum_{C, D} \left( - CD_{alt} + CD_o (1) \right)}}
+$$
+\fi
+
+\paragraph{Traffic at FU}
+
+The traffic at a FU can be computed in the following steps:
 \begin{enumerate}
-	\item {
-		Traffic from A
-	}
+	\item Add the traffic from each node in tree $A$ to each node in tree $X$.
+	\item Subtract the traffic that will be assisted by another HU connected to a node from tree $A$.
+	\item Add the traffic resulted by overflow ($o$) of previous HU connected to a node from tree $A$.
 \end{enumerate}
+
+The counting method to obtain the components for calculation will be:
+
+$$
+	AX_{total} = AX (N_A \cdot N_X) + \sum_{C, D} \left( - CD_{alt} + CD_o (1) \right)
+$$
+
+Where:
+
+\begin{itemize}
+	\item $AX (N_A \cdot N_X) \rightarrow$ Traffic from each node in tree $A$ to each node in tree $X$.
+	\item $\sum_{C, D} CD_{alt} \rightarrow$ Traffic that will be assisted by another HU connected to a node from tree $A$.
+	\item $\sum_{C, D} CD_o (1) \rightarrow$ Traffic resulted by overflow of a HU connected to a node from tree $A$.
+\end{itemize}
+
+\iffalse
+$$
+	AX_{total} =
+		\underset
+			{\text{Traffic from each node in A to each node in B}}
+			{\underbrace{AX (N_A \cdot N_X)}}
+		\underset
+			{\text{Iterations with overflowing HUs}}
+			{\underbrace{+ \sum_{C, D} \left( - CD_{alt} + CD_o (1) \right)}}
+$$
+\fi
+
+\paragraph{Notation in counting methods}
+
+\begin{itemize}
+	\item $AB_{total}$: Number of elements to compute traffic in the HU that connects $A$ and $B$.
+	\item $AB$: Size of the set with all the combinations of elements from $A$ tree and $B$ tree.
+	\item $AB_o$: Element that indicates the traffic resulting from overflow in the HU that connects $A$ and $B$.
+	\item {
+		$AB_{alt}$: Combinations of all elements in tree $A$ with elements in the limited subtree under $B$. The limited subtree under $B$ is defined by:
+		\begin{itemize}
+			\item $B$ is the only node of the tree connected to $A$.
+			\item All its children nodes must be of lower hierarchy.
+		\end{itemize}
+	}
+	\item {
+		$AB_{alt}$: \textbf{Independent} combinations of elements in tree $A$ with elements in the limited subtree $B$ to compute the traffic in the HU between $A$ and $B$.
+	}
+\end{itemize}
+
+The following relation can be useful:
+
+\begin{itemize}
+	\item $\sum_Y AY_{alt} (N_A \cdot N_{YnoA}) = AY_{highest} (N_A \cdot N_{Y_{highest}})$
+	\item $N_{YnoA} = 1 + N_E$
+\end{itemize}
 
 \subsubsection{Concepts}
 
@@ -2099,7 +2205,7 @@ Before transmission, the channel is sensed:
 	\hline
 	& $S$ & $S_{MAX}$ \\
 	\hline
-	Aloha & $G \cdot e^{-2G}$ & 0.5 e^{-1} = 0.184 \\
+	Aloha & $G \cdot e^{-2G}$ & $0.5 e^{-1} = 0.184$ \\
 	\hline
 	Distributed Aloha & $G \cdot e^{-2G \cdot (1+a)}$ & \\
 	\hline

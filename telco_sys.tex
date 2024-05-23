@@ -323,7 +323,7 @@ Services can be classified in many ways:
 		\end{itemize}
 	}
 	\item {
-		According to ITU-CCITT:
+		According to ITU:
 		\begin{itemize}
 			\item Bearer services: They provide the transport capacity.
 			\item Teleservices or end services: They provide complete communication capacity. They include terminals even it hey are not provided by the service provider. They include added value services like storage or processing.
@@ -333,10 +333,10 @@ Services can be classified in many ways:
 			\includegraphics[
 				width=14cm,
 				%height=15cm
-			]{Imágenes/Tema 1/Classification according to ITU-CCITT.png}
+			]{Imágenes/Tema 1/Classification according to ITU.png}
 			\caption{
 				\label{fig:unit1_according}
-				Classification according to ITU-CCITT
+				Classification according to ITU
 			}
 		\end{figure}
 	}
@@ -1800,14 +1800,19 @@ $$
 	\item $AB$: Size of the set with all the combinations of elements from $A$ tree and $B$ tree.
 	\item $AB_o$: Element that indicates the traffic resulting from overflow in the HU that connects $A$ and $B$.
 	\item {
-		$AB_{alt}$: Combinations of all elements in tree $A$ with elements in the limited subtree under $B$. The limited subtree under $B$ is defined by:
+		$AB_{alt}$: \textbf{Independent} combinations of elements in tree $A$ with elements in the limited subtree $B$ to compute the traffic in the HU between $A$ and $B$. We can consider two situations:
 		\begin{itemize}
-			\item $B$ is the only node of the tree connected to $A$.
-			\item All its children nodes must be of lower hierarchy.
+			\item {
+				\textbf{$AB$ is an alternative to $AX$ and $B$ is in a lower hierarchy in tree $X$} $\rightarrow$ $AB_{alt}$ will represents the combinations of all elements in tree $A$ with elements in the limited subtree under $B$. The limited subtree under $B$ is defined by:
+				\begin{itemize}
+					\item $B$ is the only node of the tree connected to $A$.
+					\item All its children nodes must be of lower hierarchy.
+				\end{itemize}
+			}
+			\item {
+				\textbf{$A$ is in the tree $X_1$ but in a lower hierarchy, $B$ is in the tree $X_2$ but in a higher hierarchy, so $AB$ overflows to $X_1 X_2$ partially} $\rightarrow$ $AB_{alt}$ will represents the independent combinations of all elements in tree $A$ with elements in the subtree under $B$ that exclusively overflow to $X_1 X_2$.
+			}
 		\end{itemize}
-	}
-	\item {
-		$AB_{alt}$: \textbf{Independent} combinations of elements in tree $A$ with elements in the limited subtree $B$ to compute the traffic in the HU between $A$ and $B$.
 	}
 \end{itemize}
 
@@ -1853,18 +1858,19 @@ $$
 
 \subsection{Intelligent network}
 
-\subsubsection{Introduction}
-
-The concept of intelligent network was originated after digitalization and at the same time of ISDN. The first standards were established in 1992 by CCITT (now UIT-T): Q.1200.
-
-It offer added value services:
+The concept of intelligent network arised after the first efforts for digitalization of infrastructure. This would allow offering added value services such as:
 
 \begin{itemize}
 	\item Routing and number translations.
 	\item Virtual Private Networks (VPNs).
 	\item Special billing.
 	\item Operator oriented services.
+	\item etc.
 \end{itemize}
+
+The first standards were established in 1992 by ITU-T in the Q.1200 series recommendations.
+
+Intelligent network is the basis for later telecommunication systems that use more complex networks, including access networks (ISDN, xDSL) and the backbone networks for mobile communications (GSM onwards).
 
 \subsubsection{Architecture}
 

@@ -1505,7 +1505,7 @@ The main reason for the usage of hierarchical networks is the reduction of the n
 	\item If we have $N$ telephones, we need $C = \frac {N \cdot (N - 1)} {2}$ connections for interconnecting each other.
 	\item If we include a local exchange for a certain area, the number of connections is reduced to $C = N$.
 \end{itemize}
-Each of these connections is denoted "subscriber loop" or "subscriber line". The exchange that only connects subscribers from the same area is denoted "local exchange" or "toll center".
+Each of these connections is denoted \textit{subscriber loop} or \textit{subscriber line}. The exchange that only connects subscribers from the same area is denoted \textit{local exchange} or \textit{toll center}.
 
 \subsubsection{Hierarchy}
 
@@ -1877,13 +1877,14 @@ Intelligent network is the basis for later telecommunication systems that use mo
 We must distinguish the following elements:
 
 \begin{itemize}
-	\item Service Switching Point (SSP): It catches or switches service requests by triggers such as prefixes.
-	\item Signalling Transfer Point (STP): It interchanges signaling information among different points in the telephony network.
-	\item Service Control Point (SCP): It is a stand alone computer connected to a database. It knows what to do with each service.
+	\item User equipment: Entry devices used by customers to request services to the network.
+	\item Service Switching Point (SSP): It catches or switches incoming service requests. There is one per local exchange.
+	\item Signalling Transfer Point (STP): It serves for interchange of signaling information among different parts of the telephony network.
+	\item Service Control Point (SCP): It consists in a stand alone computer connected to a database. It checks up the services and made corresponding requests.
 	\item External Data Base (DB): The SCP might need to use an external data base for certain services. For example, a credit card data base.
-	\item Adjunct: Same functions as SCP but referred to a local exchange.
+	\item Adjunct: Same functions as SCP but is contained in a local exchange. In this way, intelligent functions are partially decentralized and higher level instances manage less load.
 	\item {
-		Intelligent Peripheral (IP): It has several functions:
+		Intelligent Peripheral (IP): It has several functions related to incoming service requests:
 		\begin{itemize}
 			\item Voice synthesis, either from already stored text messages or text to voice conversion.
 			\item Voice recognition that allows users to answer questions or select options (numbers, yes or no, ...).
@@ -1891,9 +1892,9 @@ We must distinguish the following elements:
 			\item Multi-frequency digit recognition at second dialing phase.
 		\end{itemize}
 	}
-	\item Service Management System (SMS): Gives complete and secure information to each SCP (sink for statistical data, service measurements, alarms, ...). Technical and commercial management for intelligent network. It does not need real time connections.
+	\item Service Management System (SMS): From this point of the network, services are controlled, providing technical and commercial management for intelligent network. This is done by giving complete and secure information to each SCP (sink for statistical data, service measurements, alarms, ...). It does not need real time connections.
 	\item {
-		Service Creation Environment Point (SCE/P): It helps in the creation of new services through several stages:
+		Service Creation Environment Point (SCE/P): From this point of the network, new services are implemented. This is done through several stages:
 		\begin{itemize}
 			\item {
 				Formal service specification:
@@ -1905,6 +1906,7 @@ We must distinguish the following elements:
 			}
 			\item Service implantation.
 		\end{itemize}
+		 It does not need real time connections.
 	}
 \end{itemize}
 
@@ -1924,47 +1926,28 @@ We must distinguish the following elements:
 
 \subsection{Introduction}
 
+As studied, multiplexing and multiple access are two fundamental strategies to manage the network usage, which is limited. The way in which these strategies strategies are implemented results in different performances which can be modeled.
+
+\subsection{Network parameters}
+
 The study of multiplexing and multiple access requires the following parameters:
 
 \begin{itemize}
-	\item Offered traffic from users ($I$).
-	\item Retransmissions ($R$): It is the traffic resulted from retransmissions.
+	\item Incoming traffic ($I$): It is the traffic offered to users.
+	\item Retransmissions ($R$): It is the traffic resulted from retransmissions, packets that failed to be transmitted in the first try.
 	\item {
-		Offered traffic to the net ($G$):
+		Traffic inputed to the network ($G$):
 
 		$G = I + R$
 	}
 	\item {
-		Network efficiency ($S$): It can be computed from offered traffic to the net in relation with offered traffic from users and retransmissions:
+		Network efficiency ($S$): Traffic that is outputed. It can be computed from offered traffic to the net in relation with offered traffic from users and retransmissions:
 
 		$S = S(G, I , R)$
 
 		If there is no congestion, it equals offered traffic:
 
-		$S \overset{\mathrm{(no \quad congestion)}}{=} I$
-
-		Previous measures can be normalized to network efficiency $S$, so instead of Erlangs, they will be packets (transmissions) per packet:
-
-		$\overline{I} = \frac {I} {S} \overset{\mathrm{(no \quad congestion)}}{=} 1$
-
-		$\overline{R} = \frac {R} {S}$
-
-		$\overline{G} = \frac {G} {S} = \overline{I} + \overline{R} = \frac {I + R} {S}$
-	}
-	\item {
-		Packet propagation: It is the normalized propagation time ($t_p$). So:
-
-		$a = \frac {t_p} {W_s}$
-	}
-	\item {
-		Generating acknowledgement: It is the normalized acknowledgement time ($t_{ACK}$). So:
-
-		$w = \frac {t_{ACK}} {W_s}$
-	}
-	\item {
-		Transmission delay: It is the normalized delay. So:
-
-		$D = \frac {t_{tx}} {W_s}$
+		$S \overset{\text{(no congestion)}}{=} I \rightarrow G = S + R$
 	}
 \end{itemize}
 
@@ -1980,9 +1963,49 @@ The study of multiplexing and multiple access requires the following parameters:
 	}
 \end{figure}
 
+Previous measures can be normalized to network efficiency $S$, so instead of Erlangs, they will be packets (transmissions) per packet:
+
+$$
+	\overline{I} = \frac {I} {S} \overset{\text{(no congestion)}}{=} 1
+$$
+
+$$
+	\overline{R} = \frac {R} {S}
+$$
+
+$$
+	\overline{G} = \frac {G} {S} = \overline{I} + \overline{R} = \frac {I + R} {S}
+$$
+
+In this way, $\frac {S}{G}$ indicates the probability of successfully transmitting a packet and $\frac {G}{S}$ is the average needed retransmissions to successfully transmit a packet.
+
+\subsection{Packet transmission}
+
+Network scenarios will also be characterized by packet transmission properties:
+
+\begin{itemize}
+	\item {
+		Packet propagation ($t_p$): It is the normalized propagation time.
+
+		$a = \frac {t_p} {W_s}$
+	}
+	\item {
+		Generating acknowledgement ($t_{ACK}$): It is the normalized acknowledgement time.
+
+		$w = \frac {t_{ACK}} {W_s}$
+	}
+	\item {
+		Transmission delay ($D$): It is the normalized delay.
+
+		$D = \frac {t_{tx}} {W_s}$
+	}
+\end{itemize}
+
+\subsection{Access protocols}
+
 To solve multiplexing and multiple access problem, several access protocols have been developed.
 
-\subsection{Centralized Aloha}
+\subsubsection{Centralized Aloha}
 
 It was invented at the Hawaii University in 1970. There is a distributed variant, but since packet propagation ($a$) is usually small, the centralized version is commonly used for both scenarios.
 
@@ -2044,7 +2067,7 @@ Its characteristics are:
 	}
 \end{figure}
 
-\subsection{Distributed Aloha}
+\subsubsection{Distributed Aloha}
 
 \begin{figure}[H]
 	\centering
@@ -2076,10 +2099,15 @@ It is distributed. Its characteristics are:
 		$
 			S = G \cdot e^{-2G \cdot (1+a)}
 		$
+		Its maximum value, for $G = \frac {1} {2 (1+a)}$ is:
+
+		$
+			S_{MAX} = \frac {1} {2 (1+a) e}
+		$
 	}
 \end{itemize}
 
-\subsection{Slotted Aloha}
+\subsubsection{Slotted Aloha}
 
 It is an improvement on simple Aloha to solve collisions problem. Its operation can be summarized in:
 
@@ -2160,7 +2188,7 @@ Its characteristics are:
 	}
 \end{figure}
 
-\subsection{Carrier Sense Multiple Access (CSMA)}
+\subsubsection{Carrier Sense Multiple Access (CSMA)}
 
 Before transmission, the channel is sensed:
 
@@ -2205,29 +2233,46 @@ Before transmission, the channel is sensed:
 	}
 \end{figure}
 
-\subsubsection{Summary}
+\subsection{Summary}
 
-\begin{tabular}{|c|c|c|}
+\subsubsection{Network parameters}
+
+$G = I + R$, 
+$S \overset{\text{(no congestion)}}{=} I \rightarrow G = S + R$
+
+$\overline{I} = \frac {I} {S} \overset{\text{(no congestion)}}{=} 1$, 
+$\overline{R} = \frac {R} {S}$, 
+$\overline{G} = \frac {G} {S} = \overline{I} + \overline{R} = \frac {I + R} {S}$
+
+\subsubsection{Packet transmission}
+
+$a = \frac {t_p} {W_s}$, 
+$w = \frac {t_{ACK}} {W_s}$, 
+$D = \frac {t_{tx}} {W_s}$
+
+\subsubsection{Access protocols}
+
+\begin{tabular}{|p{2cm}|c|c|p{8cm}|}
 	\hline
-	& $S$ & $S_{MAX}$ \\
+	& $S$ & $S_{MAX}$ & $D$ \\
 	\hline
-	Aloha & $G \cdot e^{-2G}$ & $0.5 e^{-1} = 0.184$ \\
+	Aloha & $G \cdot e^{-2G}$ & $0.5 e^{-1} = 0.184$ & $\left( \frac {G} {S} - 1 \right) \cdot \left( \frac {k+1} {2} + 1 + 2a + w \right) + a + 1 \overset{\frac {G} {S} = e^{2G}}{=} \left( e^{2G} - 1 \right) \cdot \left( \frac {k+1} {2} + 1 + 2a + w \right) + a + 1$ \\
 	\hline
-	Distributed Aloha & $G \cdot e^{-2G \cdot (1+a)}$ & \\
+	Distributed Aloha & $G \cdot e^{-2G \cdot (1+a)}$ & $\frac {1} {2 (1+a) e}$ & $\left( \frac {G} {S} - 1 \right) \cdot \left( \frac {k+1} {2} + 1 + 2a + w \right) + a + 1 \overset{\frac {G} {S} = e^{2G \cdot (1+a)}}{=} \left( e^{2G \cdot (1+a)} - 1 \right) \cdot \left( \frac {k+1} {2} + 1 + 2a + w \right) + a + 1$ \\
 	\hline
-	Slotted Aloha & $G \cdot e^{-G}$ & $e^{-1} = 0.368$ \\
+	Slotted Aloha & $G \cdot e^{-G}$ & $e^{-1} = 0.368$ & $\left( \frac {G} {S} - 1 \right) \cdot \left( \frac {k+1} {2} + 1.5 + 2a + w \right) + a + 1.5 \overset{\frac {G} {S} = e^G}{=} \left( e^G - 1 \right) \cdot \left( \frac {k+1} {2} + 1.5 + 2a + w \right) + a + 1.5$ \\
 	\hline
-	CSMA (Non-persistent) & $\frac {G} {G+1}$ & \\
+	CSMA (Non-persistent) & $\frac {G} {G+1}$ & & \\
 	\hline
-	CSMA (1-persistent) & $\frac {G \cdot (1 + G) \cdot e^{-G}} {G + e^{-G}}$ & $0.55$ \\
+	CSMA (1-persistent) & $\frac {G \cdot (1 + G) \cdot e^{-G}} {G + e^{-G}}$ & $0.55$ & \\
 	\hline
-	CSMA ($p$-persistent) & & \\
+	CSMA ($p$-persistent) & & & \\
 	\hline
 \end{tabular}
 
 \begin{landscape}
 
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|p{8cm}|}
 	\hline
 	& $D$ \\
 	\hline
@@ -2448,7 +2493,7 @@ Transmitted data through networks has increassed in last decade. Networks, origi
 \begin{itemize}
 	\item Efficient use of bandwidth, which is highly demanded.
 	\item Flexibility for changing services and usage.
-	\item Achievement of coverage for all digital service, also known as "one network for everything" (B-ISDN).
+	\item Achievement of coverage for all digital service, also known as ``one network for everything'' (B-ISDN).
 \end{itemize}
 
 For that purpose, there have been developed flexible network architectures for access and transport:
@@ -3614,7 +3659,7 @@ $$
 
 If in a cell, omnidirectional antennas are used, the coverage area will be approximately circular, but circles do not cover the whole plane without overlapping. Other polygons are used to cover the plane without overlapes, there are three regular ones: triangle, square and hexagon. The one with largest ratio area/radio is the hexagon, and so, it is used.
 
-An inclined coordinated systems is used with a slope of 60º.
+An inclined coordinated systems is used with a slope of 60\º.
 
 \begin{figure}[H]
 	\centering

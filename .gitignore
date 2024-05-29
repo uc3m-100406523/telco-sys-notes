@@ -10,9 +10,7 @@
 *.pdf
 *.pytxcode
 *.run.xml
-*.synctex
-*.synctex.gz
-*.synctex.gz(busy)
+*.synctex*
 *.toc
 pdfa.xmpi
 

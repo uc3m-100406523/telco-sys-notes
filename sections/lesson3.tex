@@ -58,6 +58,14 @@ Previous to current technology, Plesiochronous Digital Hierarchy (PDH) was a sta
 	\item American PDH: 24 channels (T1) at $64 kbps$ (T0) (two of them at $56 kbps$).
 \end{itemize}
 
+\iffalse
+
+\subsection{Optical networks}
+
+AAAA
+
+\fi
+
 \section{Integrated Services Digital Network (ISDN)}
 
 \subsection{Introduction}
@@ -357,9 +365,9 @@ Global data rate, including synchronism method, is 2048 kbps (PCM). Its applicat
 		Line coding:
 		\begin{itemize}
 			\item The code method is High Density Bipolar Code (HDB3). It is similar to AMI, but limiting the transmission of many zeros in a row.
-			\item In HDB3, any instance of four consecutive 0 bits is replaced with one of the patterns $000V$ (odd) or $B00V$ (even). The choice is made to ensure that consecutive violations are of differing polarity, this is, separated by an odd number of normal + or - marks.
+			\item In HDB3, any instance of four consecutive 0 bits is replaced with one of the patterns $000V$ (odd) or $B00V$ (even). The choice is made to ensure that consecutive violations $V$ are of differing polarity, this is, separated by an odd number of normal $+$ or $-$ marks.
 			\item {
-				To determine which pattern to use, one must count the number of pluses ($+$) and the number of minuses ($-$) since the last violation bit V:
+				To determine which pattern to use, one must count the number of pluses ($+$) and the number of minuses ($-$) (equivalently, the number of ones) since the last violation bit V:
 				\begin{itemize}
 					\item If the result is an odd number then $000-$ or $000+$ ($000V$) is used.
 					\item If the result is an even number then $+00+$ or $-00-$ ($B00V$) is used.
@@ -368,12 +376,12 @@ Global data rate, including synchronism method, is 2048 kbps (PCM). Its applicat
 			\item {
 				To determine which polarity to use, one must look at the pulse preceding the four zeros:
 				\begin{itemize}
-					\item If odd ($000V$) form must be used, then $V$ simply copies the polarity of last pulse.
-					\item If even ($B00V$) form must be used, then $B$ and $V$ chosen will have the opposite polarity of the last pulse.
+					\item If odd ($000V$) form must be used, then $V$ simply copies the polarity of last pulse. Then, we can identify this sequence with the shape: $\ldots X000X \ldots$
+					\item If even ($B00V$) form must be used, then $B$ and $V$ chosen will have the opposite polarity of the last pulse. Then, we can identify this sequence with the shape: $\ldots YX00X \ldots$
 				\end{itemize}
 			}
 		\end{itemize}
-		\begin{table}
+		\begin{table}[H]
 			\centering
 			\begin{tabular}{|l|c|c|c|}
 				\hline
@@ -770,9 +778,95 @@ Equipment includes:
 	}
 \end{itemize}
 
-\subsection{SubNetwork Connection Protection (SNCP)}
+\iffalse
+Hardware protection
+In hardware, protection techniques are used to avoid data loss due to failures in transmission equipment.
+In SDH, five sections implement protection techniques:
+- Tributary: It provides bandwidth to end user.
+- Aggregate: It transmits and receives STM frames from one point to another.
+- Controller and communication: It is responsible of NE communication and controlling.
+- Cross connect: It is responsible of mapping tributary signals.
+- Power supply: It provides a power supply to transmission equipment.
+\fi
 
-SNCP transmits by both directions in the ring.
+\subsection{Protection systems in optical networks}
+
+\subsubsection{Introduction}
+
+Protection is one of the two main strategies to guarantee quality of service on backbone networks:
+\begin{itemize}
+	\item Based on protection: They use preassigned capacity to replace transport entities when those fail.
+	\item Based on restoration: They use rerouting. They require a management system.
+\end{itemize}
+
+Its implementation is carried out through management of common resources like connections and paths. There are several architectures for the implementation:
+\begin{itemize}
+	\item $1+1 \rightarrow$ There is a protection entity for each transport entity. Traffic is transmitted through both entities.
+	\item $1:1 \rightarrow$ There is a protection entity for each transport entity. When protection entities is not being used, it can be used for low-priority traffic.
+	\item $M:N \rightarrow$ There are $M$ protection entities for $N$ transport entities. It works in the same way as $1:1$ architecture.
+\end{itemize}
+
+When two nodes notice that the traffic going towards one direction has failed (unidirectional failure), the traffic can be switched to the protection entity in two modes:
+\begin{itemize}
+	\item Single-ended switching $\rightarrow$ Only the traffic going towards the affected direction is switched to the protection entity.
+	\item Dual-ended switching $\rightarrow$ Traffic going towards any direction is switched to the protection entity.
+\end{itemize}
+
+\subsubsection{Path protection schemes}
+
+One working path is replaced by one protection path.
+
+\textbf{Multiplex Section-Lineal Protection (MS-LP)}
+\begin{itemize}
+	\item $1+1$ architecture.
+	\item It has two different multiplexing physical paths.
+\end{itemize}
+
+\textbf{Multiplex Section-Shared Protection Ring (MS-SP Ring)}
+\begin{itemize}
+	\item $1:N$ architecture.
+	\item Dual-ended switching.
+	\item It spreads evenly work and protection capacity, half of VC’s are reserved for working paths and the other half is reserved for protection paths.
+	\item If a link goes down, the two adjacent nodes use the switching protection, they deviate the traffic to the opposite direction.
+	\item In case of failure at one point, the whole network can be regenerated.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[
+		width=14cm,
+		%height=15cm
+	]{images/Tema 3/MS-SPRing.png}
+	\caption{
+		\label{fig:unit3_MS_SPRing}
+		SDH Multiplex Section - Shared Protection Rings (MS-SPRing)
+	}
+\end{figure}
+
+\textbf{Multiplex Section-Dedicated Protection Ring (MS-DP Ring)}
+
+Similar to MS-SP Ring protection, but in a bidirectional connection, each sense takes a different path.
+
+\textbf{HO-Trial protection}
+\begin{itemize}
+	\item $1:1$ architecture.
+	\item Single-ended switching.
+	\item It provides a dedicated end-to-end protection.
+	\item It can be used in any physical topology (ring, mesh, etc.).
+	\item The failure will be detected when it’s ending the Termination of higher-order path function.
+\end{itemize}
+
+\subsubsection{Sub-network connection protection schemes}
+
+One working sub-network connection is replaced by one protection sub-network connection. It can be used at any physical topology.
+
+\textbf{Subnetwork Connection Protection ring (SNCP)}
+\begin{itemize}
+	\item $1+1$ architecture.
+	\item Single-ended protection.
+	\item Traffic is transmitted through working sub-network connection and protection sub-network connection at the same time.
+	\item A switch is used to select the sub-network connection.
+\end{itemize}
 
 \begin{figure}[H]
 	\centering
@@ -786,21 +880,11 @@ SNCP transmits by both directions in the ring.
 	}
 \end{figure}
 
-\subsection{Multiplex Section - Shared Protection Rings (MS-SPRing)}
-
-Only valid for STM-16 and above. The protection capacity is shared in all the ring. If it is not needed, it can be used for extra traffic.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[
-		width=14cm,
-		%height=15cm
-	]{images/Tema 3/MS-SPRing.png}
-	\caption{
-		\label{fig:unit3_MS_SPRing}
-		SDH Multiplex Section - Shared Protection Rings (MS-SPRing)
-	}
-\end{figure}
+\textbf{Drop\&Continue protection}
+\begin{itemize}
+	\item It is used at ring junctions to add connections between them.
+	\item It improves the availability of sub-networks. For example, it supports two failures when they have happened in different things.
+\end{itemize}
 
 \section{(Dense) Wavelength Division Multiplexing ((D)WDM)}
 

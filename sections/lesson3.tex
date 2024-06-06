@@ -625,6 +625,18 @@ The initial objectives were modest, such as the connection of different manufact
 	\item Broadband and narrowband compatibility.
 \end{itemize}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[
+		width=15cm,
+		%height=15cm
+	]{images/Tema 3/Network_Overlay.png}
+	\caption{
+		\label{fig:unit3_SDH_ring_arch}
+		Transport network based on SONET/SDH ring architecture.
+	}
+\end{figure}
+
 \subsection{Synchronous Transfer Module (STM-N)}
 
 SDH defines a format for transfer among network called Synchronous Transfer Module (STM), which is defined for different levels (N).
@@ -834,18 +846,38 @@ One working path is replaced by one protection path.
 \begin{figure}[H]
 	\centering
 	\includegraphics[
-		width=14cm,
+		width=7cm,
 		%height=15cm
-	]{images/Tema 3/MS-SPRing.png}
+	]{images/Tema 3/ms_sp_ring_1.png}
+	\includegraphics[
+		width=7cm,
+		%height=15cm
+	]{images/Tema 3/ms_sp_ring_2.png}
 	\caption{
 		\label{fig:unit3_MS_SPRing}
-		SDH Multiplex Section - Shared Protection Rings (MS-SPRing)
+		SDH MS-SP Ring
 	}
 \end{figure}
 
 \textbf{Multiplex Section-Dedicated Protection Ring (MS-DP Ring)}
 
 Similar to MS-SP Ring protection, but in a bidirectional connection, each sense takes a different path.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[
+		width=7cm,
+		%height=15cm
+	]{images/Tema 3/ms_dp_ring_1.png}
+	\includegraphics[
+		width=7cm,
+		%height=15cm
+	]{images/Tema 3/ms_dp_ring_2.png}
+	\caption{
+		\label{fig:unit3_MS_DPRing}
+		SDH MS-DP Ring
+	}
+\end{figure}
 
 \textbf{HO-Trial protection}
 \begin{itemize}
@@ -871,12 +903,12 @@ One working sub-network connection is replaced by one protection sub-network con
 \begin{figure}[H]
 	\centering
 	\includegraphics[
-		width=5cm,
+		width=7cm,
 		%height=15cm
-	]{images/Tema 3/SNCP.png}
+	]{images/Tema 3/sncp.png}
 	\caption{
-		\label{fig:unit3_SNCP}
-		SDH SubNetwork Connection Protection (SNCP)
+		\label{fig:unit3_sncp}
+		SDH SNCP
 	}
 \end{figure}
 

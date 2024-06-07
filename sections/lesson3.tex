@@ -107,6 +107,29 @@ ISDN's goal is to use a reduced set of interfaces between user and network for l
 	}
 \end{figure}
 
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		   & TE & TA & NT & LT & ET \\
+		\hline
+		TE & & R & S, T & & \\
+		\hline
+		TA & \cellcolor{black} & & S, T & & \\
+		\hline
+		NT & \cellcolor{black} & \cellcolor{black} & T & U & \\
+		\hline
+		LT & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & & V \\
+		\hline
+		ET & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \cellcolor{black} & \\
+		\hline
+	\end{tabular}
+	\caption{
+		\label{tab:isdn_ref_conf}
+		ISDN reference configuration
+	}
+\end{table}
+
 \subsection{Channels}
 
 ISDN establishes different types of data channel whose implementation is done at bit level, inside data frames. There are three types:

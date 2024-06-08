@@ -167,6 +167,23 @@ For transmission, we use several channels multiplexed in TDM (frame). For each p
 
 There are two access types, basic rate and primary rate, which will be able to work in specific interfaces.
 
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		& R & S & T & U & V \\
+		\hline
+		Basic rate & & X & & X & \\
+		\hline
+		Primary rate & & & & X & \\
+		\hline
+	\end{tabular}
+	\caption{
+		\label{tab:isdn_interfaces_rates}
+		ISDN interface rates
+	}
+\end{table}
+
 \subsubsection{Basic rate}
 
 The useful data rate is calculated in the following way:

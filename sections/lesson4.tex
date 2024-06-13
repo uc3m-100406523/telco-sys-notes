@@ -7,134 +7,31 @@
 
 
 
-\section{PMR and PMT systems}
+\section{Technical basis for mobile telephony}
 
-\subsection{Introduction}
+\subsection{Two-way radio}
 
-PMR and PMT systems
+A two-way radio is a radio that can both transmit and receive radio waves which is used for bidirectional person-to-person voice communication with other users with similar radios.
 
-\subsection{Private Mobile Radio (PMR)}
+Two-way radios usually use a half-duplex communication channel, which permits two-way communication, albeit with the limitation that only one user can transmit at a time. this requires users in a group to take turns talking. The radio is normally in receive mode so the user can hear all other transmissions on the channel. When the user wants to talk, they press a ``push-to-talk'' button, which turns off the receiver and turns on the transmitter; when the button is released, the receiver is activated again.
 
-Usually not directly connected to public telephony network. Modeled as waiting systems. The PMR main characteristics are:
+Multiple channels are provided so separate user groups can communicate in the same area without interfering with each other and some radios are designed to scan the channels in order to find a valid transmission. Other two-way radio systems operate in full-duplex mode, in which both parties can talk simultaneously. This requires either two separate radio channels or channel sharing methods such as time-division duplex (TDD) to carry the two directions of the conversation simultaneously on a single radio frequency.
 
-\begin{itemize}
-	\item Limited Area (territorial).
-	\item No usually directly connected to public switching telephony networks (PSTN)
-	\item Fleet management. Enterprises.
-	\item Example: TETRA (Trans European Trunked Radio)
-\end{itemize}
-
-Other characteristics:
-
-\begin{itemize}
-	\item MS to MS calls must be allowed.
-	\item Calls are frequent and short in duration.
-	\item Group calls must be permitted.
-	\item Work in waiting regime, this is, they are modeled as waiting systems.
-	\item Usually simplex (one or two frequencies) or semiduplex PTT (push to talk), although they can also be duplex.
-\end{itemize}
-
-Channel assignment:
-
-\begin{itemize}
-	\item Fixed Assignment: the channel is fixed for a group of M users that need to share it. It is simpler but lower performance. Used if the number of users is low.
-	\item Trunked Assignment: pool of N channels being shared for M users. More complex but much more efficient.
-\end{itemize}
-
-Trunking Systems:
-
-\begin{itemize}
-	\item Pool of channels where the channel assignment is dynamic.
-	\item They are waiting as the fixed assignment.
-	\item A signaling protocol is needed for channel assignment and managing calling queues.
-	\item In Europe, MPT 1327 protocol was developed in UK, which has been converted in fact the standard for such as systems. It is based on slotted ALOHA with variable frame length.
-\end{itemize}
-
-\subsection{Personal Mobile Telecommunications (PMT)}
-
-Connected directly to public Telephony Network. Modeled as blocking systems. It is the public radio-telephony service, so it offers the mobile telephony service to the users. Any user, from a parked or moving vehicle, can sends or receive calls of/to any other fixed or mobile subscriber either national or international. These systems are, indeed, the PLMN (Public Land Mobile Network) with its own switching centers MSC (Mobile Switching Centers), that are connected to the public switched telephony service or other networks such as ISDN, data networks,
-
-....
-
-The main objectives are:
-\begin{itemize}
-	\item Large subscribers capacity to attend high traffic demands.
-	\item Voice quality equal or higher than fixed service.
-	\item Spectrum efficiency since we manage a limited number of frequencies, so frequency usage must be planned. The solution is frequency reuse by cellular planning.
-	\item Radio frequency automatic switching.
-	\item Capacity of expansion to achieve large coverage.
-	\item Reasonable costs
-\end{itemize}
-
-Related concepts:
-\begin{itemize}
-	\item Handoff or handover: BS switching of a current voice call.
-	\item Roaming: The mobile terminal moves from the own network to a different one.
-	\item Downlink or direct channel: Radio channel for transmission from BS to MS (BS$\rightarrow$MS).
-	\item Uplink or return channel: Radio channel for transmission from MS to BS (MS$\rightarrow$BS). Lower frequencies in the band are allocated to it.
-\end{itemize}
-
-\section{Trunking systems: TETRA}
-
-\subsection{Introduction}
+\subsection{Trunking systems}
 
 The trunking systems are private radio telephony services offered to a closed group of users (usually a vehicle fleet, like police, firemans, ambulances, public transportation, ...), which are locally or even regionally located. The trunking network is shared among several groups by using dynamic radio channel allocation. When one user requests a call to another user, the system allocates a free radio channel from the pool and, once the call is finished, it is released.
 
 The main difference with respect to Automatic Mobile Telephony like GSM is the way the call is processed. The trunking system is the one who handles calls by establishing a queue for all the incoming pending calls. Then, according to the arrived order or the priority, the call is sent. On the other hand, in PMT systems, the user is the one who needs to call again if the call is blocked in the system. It is a waiting system instead of a blocking one. The management of a trunking system aims to get a very efficient use of resources, even obtaining a higher efficiency than traditional systems. The trunking system is able to use the pauses in normal voice transmission to give access to other calls.
 
-\subsection{Terrestrial Trunking Radio (TETRA)}
+\subsection{Cellular systems}
 
-It is the 2nd generation of standards for PMR systems in Europe. Among the facilities of TETRA we
-have:
-
-\begin{itemize}
-	\item Duplex voice and data transmission.
-	\item Data transmission up to 28.8 kbps.
-	\item Optimized packet data transmission.
-	\item Telemetry and slow video transmission.
-	\item Communications security.
-	\item Wide number of interfaces for interconnection with other networks.
-	\item {
-		Two modes:
-		\begin{itemize}
-			\item Voice + Data mode (V+D): Normal mode for telephony applications and data.
-			\item Packet Data Optimized (PDO): It allows new data services such as e-mail, data interchange, location, ...
-		\end{itemize}
-	}
-\end{itemize}
-
-About radio interface:
+Cellular systems divide the covered area in smaller sections denoted \textbf{cells}. The geometric scheme generated on the terrain will allow us to organize the distribution of points to access to the network through radio communications and the access resources (bandwidth and frequency channels), which will be distributed.
 
 \begin{itemize}
-	\item {
-		Basic radio interface specifications:
-		\begin{itemize}
-			\item 25 kHz channelization (optional 12.5 kHz).
-			\item TDMA multiple-access with four intervals per frame.
-			\item $\pi/4$ - DPSK modulation.
-			\item Data rate 36 kbps.
-			\item Protection rate of 19 dB.
-		\end{itemize}
-	}
-	\item Within TDMA hierarchy. It uses a slot of 85/6 ms duration with capacity of 510 bits.
-	\item Frame composed by four slot. Its duration is 56.67 ms.
-	\item Multiframe composed by 18 frames. Its duration is 1.020 ms.
-	\item Hiperframe composed by 60 multiframes.
+	\item All the frequencies of the available bandwidth will are assigned to a group of cells denoted as \textbf{cluster}, which will have a fixed number of cells $J$.
+	\item These radio systems are limited by interference.
+	\item The \textbf{co-channel distance} or reuse distance ($D$) is the distance between two cells using the same frequencies with respect to the \textbf{protection rate} ($\left( \frac{c}{i} \right)$).
 \end{itemize}
-
-\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	Ramp	& Data		& Training		& Data		& Ramp \\
-	\hline
-	13 bits	& 216 bits	& 14+22+16 bits	& 216 bits	& 13 bits \\
-	\hline
-\end{tabular}
-
-\section{Cellular systems}
-
-\subsection{Introduction}
-
-The covered area is divided in smaller ones denoted cells. The co-channel distance or reuse distance is the distance between two cells using the same frequencies with respect to the protection rate. These radio systems are limited by interference. All the frequencies are assigned to a group of cells denoted as cluster. The area is covered by the cluster (GSM).
 
 \begin{figure}[H]
 	\centering
@@ -148,7 +45,7 @@ The covered area is divided in smaller ones denoted cells. The co-channel distan
 	}
 \end{figure}
 
-In the figure \ref{fig:unit4_cells_scheme}, the area is covered by clusters reusing the same frequencies. D is the co-channel distance. We can develope the following relations:
+In the figure \ref{fig:unit4_cells_scheme}, the area is covered by clusters reusing the same frequencies. We can develope the following relations:
 
 \begin{itemize}
 	\item {
@@ -170,16 +67,16 @@ In the figure \ref{fig:unit4_cells_scheme}, the area is covered by clusters reus
 					i = \frac {P_t} {k (D - R)^n}
 				\end{matrix}
 			\right\rbrace \rightarrow
-			\frac {c} {i} = \left( \frac {D - R} {R} \right)^n \approxeq \left( \frac {D} {R} \right)^n
+			\left( \frac{c}{i} \right) = \left( \frac {D - R} {R} \right)^n \approxeq \left( \frac {D} {R} \right)^n
 		$
 	}
 \end{itemize}
 
-If $R$ and $D$ are decreased, holding a given $\frac {c} {i}$, we can increase the reuse of frequencies and system capacity. However, $R$ is lower bounded by the protection rate:
+If $R$ and $D$ are decreased, holding a given $\left( \frac{c}{i} \right)$, we can increase the reuse of frequencies and system capacity. However, $R$ is lower bounded by the protection rate:
 
-$$\left( \frac {c} {i} \right)_{MIN} = r_p$$
+$$\left( \frac{c}{i} \right)_{MIN} = r_p$$
 
-\subsection{Dimensioning}
+\subsubsection{Dimensioning}
 
 Mobile cellular systems are designed as blocking systems:
 
@@ -266,7 +163,7 @@ $$
 	M = Q \cdot J \cdot m
 $$
 
-\subsection{Cellular geometry}
+\subsubsection{Cellular geometry}
 
 If in a cell, omnidirectional antennas are used, the coverage area will be approximately circular, but circles do not cover the whole plane without overlapping. Other polygons are used to cover the plane without overlapes, there are three regular ones: triangle, square and hexagon. The one with largest ratio area/radio is the hexagon, and so, it is used.
 
@@ -323,7 +220,7 @@ Relations are:
 	}
 \end{itemize}
 
-\subsection{Cellular division}
+\subsubsection{Cellular division}
 
 Cells can be divided into smaller ones according to demand (rural areas, urban areas, dense urban areas, etc.). It gives more flexibility to the planning process. The evolution is progressive. Dividing by two comes with:
 
@@ -336,7 +233,7 @@ Cells can be divided into smaller ones according to demand (rural areas, urban a
 	\item Costs are increased.
 \end{itemize}
 
-\subsection{Sectoring}
+\subsubsection{Sectoring}
 
 Instead of using omnidirectional antennas at the very centre of each cell, directive antennas at the cell edges are used. In this way, the number of interference sources can be reduced due to antenna directivity.
 
@@ -372,6 +269,119 @@ This structure has some advantages:
 		Cellular sectoring
 	}
 \end{figure}
+
+\subsection{PMR and PMT systems}
+
+Most widely used mobile communication systems can be classified as Private Mobile Radio (PMR) or Personal Mobile Telecommunications (PMT), and all the standards studied in this lesson belong to one of these categories.
+
+\subsubsection{Private Mobile Radio / Professional Mobile Radio (PMR)}
+
+A set of two-way radio systems. Usually not directly connected to public telephony network. Modeled as waiting systems. The PMR main characteristics are:
+
+\begin{itemize}
+	\item Limited area (territorial).
+	\item No usually directly connected to public switching telephony networks (PSTN)
+	\item Fleet management. Enterprises.
+	\item Example: TETRA (Trans European Trunked Radio)
+\end{itemize}
+
+Other characteristics:
+
+\begin{itemize}
+	\item MS to MS calls must be allowed.
+	\item Calls are frequent and short in duration.
+	\item Group calls must be permitted.
+	\item Work in waiting regime, this is, they are modeled as waiting systems.
+	\item Usually simplex (one or two frequencies) or semiduplex PTT (push to talk), although they can also be duplex.
+\end{itemize}
+
+Channel assignment:
+
+\begin{itemize}
+	\item Fixed assignment: the channel is fixed for a group of M users that need to share it. It is simpler but lower performance. Used if the number of users is low.
+	\item Trunked assignment: pool of N channels being shared for M users. More complex but much more efficient.
+\end{itemize}
+
+In case they use trunked assignment:
+
+\begin{itemize}
+	\item Pool of channels where the channel assignment is dynamic.
+	\item They are waiting as the fixed assignment.
+	\item A signaling protocol is needed for channel assignment and managing calling queues.
+	\item In Europe, MPT 1327 protocol was developed in UK, which has been converted in fact the standard for such as systems. It is based on slotted ALOHA with variable frame length.
+\end{itemize}
+
+\subsubsection{Personal Mobile Telecommunications (PMT)}
+
+Connected directly to public Telephony Network. Modeled as blocking systems. It is the public radio-telephony service, so it offers the mobile telephony service to the users. Any user, from a parked or moving vehicle, can sends or receive calls of/to any other fixed or mobile subscriber either national or international. These systems are, indeed, the PLMN (Public Land Mobile Network) with its own switching centers MSC (Mobile Switching Centers), that are connected to the public switched telephony service or other networks such as ISDN, data networks,
+
+....
+
+The main objectives are:
+\begin{itemize}
+	\item Large subscribers capacity to attend high traffic demands.
+	\item Voice quality equal or higher than fixed service.
+	\item Spectrum efficiency since we manage a limited number of frequencies, so frequency usage must be planned. The solution is frequency reuse by cellular planning.
+	\item Radio frequency automatic switching.
+	\item Capacity of expansion to achieve large coverage.
+	\item Reasonable costs
+\end{itemize}
+
+Related concepts:
+\begin{itemize}
+	\item Handoff or handover: BS switching of a current voice call.
+	\item Roaming: The mobile terminal moves from the own network to a different one.
+	\item Downlink or direct channel: Radio channel for transmission from BS to MS (BS$\rightarrow$MS).
+	\item Uplink or return channel: Radio channel for transmission from MS to BS (MS$\rightarrow$BS). Lower frequencies in the band are allocated to it.
+\end{itemize}
+
+\section{Terrestrial Trunking Radio (TETRA)}
+
+It is the 2nd generation of standards for PMR systems in Europe. Among the facilities of TETRA we
+have:
+
+\begin{itemize}
+	\item Duplex voice and data transmission.
+	\item Data transmission up to 28.8 kbps.
+	\item Optimized packet data transmission.
+	\item Telemetry and slow video transmission.
+	\item Communications security.
+	\item Wide number of interfaces for interconnection with other networks.
+	\item {
+		Two modes:
+		\begin{itemize}
+			\item Voice + Data mode (V+D): Normal mode for telephony applications and data.
+			\item Packet Data Optimized (PDO): It allows new data services such as e-mail, data interchange, location, ...
+		\end{itemize}
+	}
+\end{itemize}
+
+About radio interface:
+
+\begin{itemize}
+	\item {
+		Basic radio interface specifications:
+		\begin{itemize}
+			\item 25 kHz channelization (optional 12.5 kHz).
+			\item TDMA multiple-access with four intervals per frame.
+			\item $\pi/4$ - DPSK modulation.
+			\item Data rate 36 kbps.
+			\item Protection rate of 19 dB.
+		\end{itemize}
+	}
+	\item Within TDMA hierarchy. It uses a slot of 85/6 ms duration with capacity of 510 bits.
+	\item Frame composed by four slot. Its duration is 56.67 ms.
+	\item Multiframe composed by 18 frames. Its duration is 1.020 ms.
+	\item Hiperframe composed by 60 multiframes.
+\end{itemize}
+
+\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	Ramp	& Data		& Training		& Data		& Ramp \\
+	\hline
+	13 bits	& 216 bits	& 14+22+16 bits	& 216 bits	& 13 bits \\
+	\hline
+\end{tabular}
 
 \section{Global System for Mobile Communications (GSM)}
 

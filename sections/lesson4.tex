@@ -28,9 +28,11 @@ The main difference with respect to Automatic Mobile Telephony like GSM is the w
 Cellular systems divide the covered area in smaller sections denoted \textbf{cells}. The geometric scheme generated on the terrain will allow us to organize the distribution of points to access to the network through radio communications and the access resources (bandwidth and frequency channels), which will be distributed.
 
 \begin{itemize}
-	\item All the frequencies of the available bandwidth will are assigned to a group of cells denoted as \textbf{cluster}, which will have a fixed number of cells $J$.
-	\item These radio systems are limited by interference.
-	\item The \textbf{co-channel distance} or reuse distance ($D$) is the distance between two cells using the same frequencies with respect to the \textbf{protection rate} ($\left( \frac{c}{i} \right)$).
+	\item All the frequencies of the available bandwidth will are assigned to a group of cells denoted as \textbf{cluster}, which will have a fixed number of cells $J$. These clusters will also be sections of the \textbf{coverage area}.
+	\item These radio systems are limited by interference. When designing them, a limit for interference is selected, called \textbf{protection rate} ($r_p$).
+	\item The \textbf{co-channel distance} or reuse distance ($D$) is the distance between two cells using the same frequencies with respect to the protection rate.
+	\item User equipment will be separated by a distance $R$ from the access point.
+	\item Signals, both carrier ($c$) and interference ($i$) are attenuated along distance following a free-space path loss model with index $n$.
 \end{itemize}
 
 \begin{figure}[H]
@@ -41,32 +43,36 @@ Cellular systems divide the covered area in smaller sections denoted \textbf{cel
 	]{images/Tema 4/Cellular systems description.png}
 	\caption{
 		\label{fig:unit4_cells_scheme}
-		Cellular system scheme
+		Cellular system scheme. The area is covered by clusters reusing the same frequencies.
 	}
 \end{figure}
 
-In the figure \ref{fig:unit4_cells_scheme}, the area is covered by clusters reusing the same frequencies. We can develope the following relations:
+\subsubsection{Interference}
+
+To understand interference we can develope the following relations:
 
 \begin{itemize}
 	\item {
 		Basic propagation losses:
 
-		$I_b = k \cdot r^n$
+		$l_{b, c} = k \cdot R^n$
+
+		$l_{b, i} = k (D - R)^n$
 	}
 	\item {
+			Received carrier signal:
+
 		$c = \frac {P_t} {k \cdot R^n}$
 	}
 	\item {
+		Received interference:
+
 		$i = \frac {P_t} {k (D - R)^n}$
 	}
 	\item {
+		Carrier-to-interference ratio:
+
 		$
-			\left.
-				\begin{matrix}
-					c = \frac {P_t} {k \cdot R^n} \\
-					i = \frac {P_t} {k (D - R)^n}
-				\end{matrix}
-			\right\rbrace \rightarrow
 			\left( \frac{c}{i} \right) = \left( \frac {D - R} {R} \right)^n \approxeq \left( \frac {D} {R} \right)^n
 		$
 	}
@@ -74,98 +80,115 @@ In the figure \ref{fig:unit4_cells_scheme}, the area is covered by clusters reus
 
 If $R$ and $D$ are decreased, holding a given $\left( \frac{c}{i} \right)$, we can increase the reuse of frequencies and system capacity. However, $R$ is lower bounded by the protection rate:
 
-$$\left( \frac{c}{i} \right)_{MIN} = r_p$$
+$$
+	\left( \frac{c}{i} \right) \ge r_p \rightarrow \left( \frac {D} {R} \right)^n \ge r_p
+$$
 
 \subsubsection{Dimensioning}
 
-Mobile cellular systems are designed as blocking systems:
-
-$$
-	p = B(N, A)
-$$
-
-Where:
 \begin{itemize}
-	\item $p$: Blocking probability.
-	\item $N$: Available number of radiofrequency channels in the cell.
-	\item $A$: Offered traffic.
+	\item {
+		\textbf{Traffic modeling}
+
+		Mobile cellular systems are designed as blocking systems:
+
+		$$
+			GoS = p_B = \operatorname{B}(c, A_o)
+		$$
+
+		The offered traffic in a cell is:
+
+		$$
+			A_o = \operatorname{B}^{-1} (N - 1, p_B)
+		$$
+		
+		Where $B^{-1}$ stands for Erlang B inverse function.
+
+		Assuming that the median call duration is $s$ seconds and the mean number of calls at Busy Hour is $\lambda_{user}$, the offered traffic per user will be:
+
+		$$
+			a_o = s \cdot \frac {\lambda_{user}} {3600} [E]
+		$$
+
+		The number of mobile users in a cell is:
+
+		$$
+			m = \frac {A_o} {a_o}
+		$$
+	}
+	\item {
+		\textbf{Channelization}
+
+		For the number of available channels:
+
+		$$
+			N_{cluster} = \frac {W} {\Delta f} = \frac {W} {f_{i} -  f_{i-1}}
+		$$
+
+		Where:
+		\begin{itemize}
+			\item $W$: Available bandwidth for transmission or reception.
+			\item $\Delta f$: Separation between radio frequency channels.
+		\end{itemize}
+
+		If the cluster has $J$ cells, the number of radiofrequency channels in a cell is:
+
+		$$
+			N_{cell} = \frac {N_{cluster}} {J}
+		$$
+
+		Usually, some radio frequency channels in the cell are reserved for signaling purposes:
+
+		$$
+			c = N_{cell} - N_{signaling}
+		$$
+	}
+	\item {
+		\textbf{Cell, cluster and coverage area dimensioning}
+
+		The allowable traffic intensity in the cell is:
+
+		$$
+			\rho_a = \frac {A_o} {S_{cell}} [E / km^2]
+		$$
+
+		Where $S_{cell}$ is the cell area in $km^2$.
+
+		Then, the area for the cluster is:
+
+		$$
+			S_{cluster} = J \cdot S_{cell}
+		$$
+
+		If the coverage area must be $S$, the number of clusters will be:
+
+		$$
+			Q = \operatorname{ceil} \left( \frac {S} {S_{cluster}} \right) + 1 \approxeq \frac {S} {J \cdot S_{cell}}
+		$$
+
+		$Q$ is also the number of times that frequencies are reused and it is called the \textbf{reuse factor}.
+
+		The whole number of channels for traffic in the coverage area will be:
+
+		$$
+			Q \cdot J \cdot (N - 1) \approxeq C \cdot \frac {S} {J \cdot S_{cell}}
+		$$
+
+		And the total number of users will be:
+
+		$$
+			M = Q \cdot J \cdot m
+		$$
+	}
 \end{itemize}
-
-For the number of available channels:
-
-$$
-	C = \frac {W} {\Delta f} = \frac {W} {f_2 -  f_1}
-$$
-
-Where:
-\begin{itemize}
-	\item $W$: Available bandwidth for transmission or reception.
-	\item $\Delta f$: Separation between radio frequency channels.
-\end{itemize}
-
-If the cluster has $J$ cells, the number of radiofrequency channels in a cell is:
-
-$$
-	N = \frac {C} {J}
-$$
-
-Assuming that the median call duration is $H$ seconds and the mean number of calls at Busy Hour is $L$, the offered traffic per user will be:
-
-$$
-	a = H \cdot \frac {L} {3600} [E]
-$$
-
-The offered traffic in a cell is:
-
-$$
-	A = B^{-1} (N - 1, p)
-$$
-
-Where $B^{-1}$ stands for Erlang B inverse function, and $p$ is the blocking probability. Usually, $N - 1$ radio frequency channels are considered because one is reserved for signaling purposes.
-
-The number of mobile users in a cell is:
-
-$$
-	m = \frac {A} {a}
-$$
-
-The allowable traffic intensity in the cell is:
-
-$$
-	\rho_a = \frac {A} {S_c} [E / km^2]
-$$
-
-Where $S_c$ is the cell area in km$^2$.
-
-Then, the area for the cluster is:
-
-$$
-	S_r = J \cdot S_c
-$$
-
-If the coverage area must be $S$, the number of clusters will be:
-
-$$
-	Q = integer \left( \frac {S} {S_r} \right) + 1 \approxeq \frac {S} {J \cdot S_c}
-$$
-
-$Q$ is also the number of times that frequencies are reused and it is considered the reuse factor.
-
-The whole number of channels for traffic in the coverage area will be:
-
-$$
-	Q \cdot J \cdot (N - 1) \approxeq C \cdot \frac {S} {J \cdot S_c}
-$$
-
-And the total number of users will be:
-
-$$
-	M = Q \cdot J \cdot m
-$$
 
 \subsubsection{Cellular geometry}
 
-If in a cell, omnidirectional antennas are used, the coverage area will be approximately circular, but circles do not cover the whole plane without overlapping. Other polygons are used to cover the plane without overlapes, there are three regular ones: triangle, square and hexagon. The one with largest ratio area/radio is the hexagon, and so, it is used.
+If in a cell, omnidirectional antennas are used, the coverage area will be approximately circular,
+but circles do not cover the whole plane without overlapping.
+Other polygons are used to cover the plane without overlapes,
+there are three regular ones: triangle, square and hexagon.
+The one with largest ratio area/radio is the hexagon, and so, it is used.
 
 An inclined coordinated systems is used with a slope of 60 degrees.
 
@@ -276,7 +299,15 @@ Most widely used mobile communication systems can be classified as Private Mobil
 
 \subsubsection{Private Mobile Radio / Professional Mobile Radio (PMR)}
 
-A set of two-way radio systems. Usually not directly connected to public telephony network. Modeled as waiting systems. The PMR main characteristics are:
+A set of two-way radio systems. Usually not directly connected to public telephony network.
+
+They are modeled as waiting systems:
+
+$$
+	GoS = \operatorname{P}(W_q > \frac{1}{\mu}) = \operatorname{C}(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}
+$$
+
+The PMR main characteristics are:
 
 \begin{itemize}
 	\item Limited area (territorial).

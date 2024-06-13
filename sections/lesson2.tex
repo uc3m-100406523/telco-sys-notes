@@ -579,7 +579,7 @@ The characteristics of this model are:
 As can be infered, estimating waiting time distribution in this model is more complex. The probability of a customer having to wait on the queue due to having all servers occupied can be computed iteratively with Erlang C function, which depends on the incoming offered traffic $A_o$ and the number of servers $c$:
 
 $$
-	C(A_o, c) = \frac {A_{o}^c} {c! \cdot (1-\rho)} P_0 =  \frac {A_{o}^c} { c! \cdot (1-\rho) \cdot \left( \sum_{n=0}^{c-1} \left( \frac {A_{o}^n} {n!} \right) + \frac {A_{o}^c} {c! \cdot (1-\rho)} \right) }
+	\operatorname{C}(A_o, c) = \frac {A_{o}^c} {c! \cdot (1-\rho)} P_0 =  \frac {A_{o}^c} { c! \cdot (1-\rho) \cdot \left( \sum_{n=0}^{c-1} \left( \frac {A_{o}^n} {n!} \right) + \frac {A_{o}^c} {c! \cdot (1-\rho)} \right) }
 $$
 
 \begin{figure}[H]
@@ -646,7 +646,7 @@ The rest of properties can be derived:
 		Probability of having to wait in the queue:
 
 		$
-			P_{wait} = C(A_o, c) = \frac {A_{o}^c} {c! \cdot (1-\rho)} P_0 =  \frac {A_{o}^c} { c! \cdot (1-\rho) \cdot \left( \sum_{n=0}^{c-1} \left( \frac {A_{o}^n} {n!} \right) + \frac {A_{o}^c} {c! \cdot (1-\rho)} \right) }
+			P_{wait} = \operatorname{C}(A_o, c) = \frac {A_{o}^c} {c! \cdot (1-\rho)} P_0 =  \frac {A_{o}^c} { c! \cdot (1-\rho) \cdot \left( \sum_{n=0}^{c-1} \left( \frac {A_{o}^n} {n!} \right) + \frac {A_{o}^c} {c! \cdot (1-\rho)} \right) }
 		$
 	}
 	\item {
@@ -660,14 +660,14 @@ The rest of properties can be derived:
 		Average number of users in the queue:
 
 		$
-			L_q = \frac {\rho} {1-\rho} \cdot C(A_o, c)
+			L_q = \frac {\rho} {1-\rho} \cdot \operatorname{C}(A_o, c)
 		$
 	}
 	\item {
 		Average number of users in the system:
 
 		$
-			L = c \cdot \rho + \frac {\rho} {1-\rho} \cdot C(A_o, c)
+			L = c \cdot \rho + \frac {\rho} {1-\rho} \cdot \operatorname{C}(A_o, c)
 		$
 	}
 	\item {
@@ -682,8 +682,8 @@ The rest of properties can be derived:
 
 		$
 			W_q =
-			\frac {W_s} {c \cdot (1-\rho)} \cdot C(A_o, c) =
-			\frac {1} {\mu \cdot c \cdot (1-\rho)} \cdot C(A_o, c)
+			\frac {W_s} {c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c) =
+			\frac {1} {\mu \cdot c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c)
 		$
 	}
 	\item {
@@ -692,8 +692,8 @@ The rest of properties can be derived:
 		$
 			W =
 			W_s + W_q =
-			W_s + \frac {W_s} {c \cdot (1-\rho)} \cdot C(A_o, c) =
-			\frac {1} {\mu} + \frac {1} {\mu \cdot c \cdot (1-\rho)} \cdot C(A_o, c)
+			W_s + \frac {W_s} {c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c) =
+			\frac {1} {\mu} + \frac {1} {\mu \cdot c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c)
 			\overset {\rho=1} {=} \infty
 		$
 	}
@@ -701,7 +701,7 @@ The rest of properties can be derived:
 		Distribution of mean time in the queue:
 
 		$
-			P(W_q < t) = 1 - C(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}
+			P(W_q < t) = 1 - \operatorname{C}(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}
 		$
 	}
 \end{itemize}
@@ -787,7 +787,7 @@ The characteristics of this model are:
 The fact that the queue has the same size as the number of servers equals to not having queue but a fixed number of $c$ servers. As can be infered, apart from external blocking sources, this system itself will cause blocking when there are more calls than available servers. Blocking probability can be computed iteratively with Erlang B function, which depends on the incoming offered traffic $A_o$ and the number of servers $c$:
 
 $$
-	B(A_o, c) = P_0 \cdot \frac {A_{o}^c} {c!}= \frac {A_{o}^c} { c! \cdot \left( \sum_{n=0}^{c} \left( \frac {A_{o}^n} {n!} \right) \right) }
+	\operatorname{B}(A_o, c) = P_0 \cdot \frac {A_{o}^c} {c!}= \frac {A_{o}^c} { c! \cdot \left( \sum_{n=0}^{c} \left( \frac {A_{o}^n} {n!} \right) \right) }
 $$
 
 \begin{figure}[H]
@@ -869,14 +869,14 @@ The rest of properties can be derived:
 		Blocking probability:
 
 		$
-			P_{\textrm{blocking}} = B(A_o, c) = P_0 \cdot \frac {A_{o}^c} {c!} = \frac {\frac{A_{o}^c}{c!}} {\sum_{n=0}^c \left( \frac {A_{o}^n} {n!} \right)} = \frac {A_{o}^c} { c! \cdot \left( \sum_{n=0}^{c} \left( \frac {A_{o}^n} {n!} \right) \right) }
+			P_{\textrm{blocking}} = \operatorname{B}(A_o, c) = P_0 \cdot \frac {A_{o}^c} {c!} = \frac {\frac{A_{o}^c}{c!}} {\sum_{n=0}^c \left( \frac {A_{o}^n} {n!} \right)} = \frac {A_{o}^c} { c! \cdot \left( \sum_{n=0}^{c} \left( \frac {A_{o}^n} {n!} \right) \right) }
 		$
 	}
 	\item {
 		Carried traffic:
 
 		$
-			A_c = A_o \cdot \left( 1 - B(A_o, c) \right)
+			A_c = A_o \cdot \left( 1 - \operatorname{B}(A_o, c) \right)
 		$
 	}
 	\item {
@@ -970,23 +970,23 @@ The rest of properties can be derived:
 	\hline
 	$L_s$ & $A_c = \frac {\lambda_a} {\mu} = \rho$ & \multicolumn{2}{c|}{$A_c = \frac {\lambda_a} {\mu} = c \cdot \rho$} \\
 	\hline
-	$L_q$ & $\frac {\rho^2} {1-\rho}$ & $\frac {\rho} {1-\rho} \cdot C(A_o, c)$ & $0$ \\
+	$L_q$ & $\frac {\rho^2} {1-\rho}$ & $\frac {\rho} {1-\rho} \cdot \operatorname{C}(A_o, c)$ & $0$ \\
 	\hline
-	$L$ & $\frac {\rho} {1-\rho}$ & $c \cdot \rho + \frac {\rho} {1-\rho} \cdot C(A_o, c)$ & $L_s = A_c = \frac {\lambda_a} {\mu} = c \cdot \rho$ \\
+	$L$ & $\frac {\rho} {1-\rho}$ & $c \cdot \rho + \frac {\rho} {1-\rho} \cdot \operatorname{C}(A_o, c)$ & $L_s = A_c = \frac {\lambda_a} {\mu} = c \cdot \rho$ \\
 	\hline
 	$W_s$ & \multicolumn{3}{c|}{$\frac {1} {\mu}$} \\
 	\hline
-	$W_q$ & $W_s \cdot \frac {\rho} {1-\rho} = \frac {\rho} {\mu \cdot (1-\rho)}$ & $\frac {W_s} {c \cdot (1-\rho)} \cdot C(A_o, c) = \frac {1} {\mu \cdot c \cdot (1-\rho)} \cdot C(A_o, c)$ & $0$ \\
+	$W_q$ & $W_s \cdot \frac {\rho} {1-\rho} = \frac {\rho} {\mu \cdot (1-\rho)}$ & $\frac {W_s} {c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c) = \frac {1} {\mu \cdot c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c)$ & $0$ \\
 	\hline
-	$W$ & $\frac {W_s} {1-\rho} = \frac {1} {\mu \cdot (1-\rho)}$ & $W_s + \frac {W_s} {c \cdot (1-\rho)} \cdot C(A_o, c) = \frac {1} {\mu} + \frac {1} {c \cdot \mu \cdot (1-\rho)} \cdot C(A_o, c)$ & $W_s = \frac {1} {\mu}$ \\
+	$W$ & $\frac {W_s} {1-\rho} = \frac {1} {\mu \cdot (1-\rho)}$ & $W_s + \frac {W_s} {c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c) = \frac {1} {\mu} + \frac {1} {c \cdot \mu \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c)$ & $W_s = \frac {1} {\mu}$ \\
 	\hline
-	$P_{wait}$ & $A_o = \frac {\lambda} {\mu}$ & $C(A_o, c)$ & $0$ \\
+	$P_{wait}$ & $A_o = \frac {\lambda} {\mu}$ & $\operatorname{C}(A_o, c)$ & $0$ \\
 	\hline
-	$P_{blocking}$ & \multicolumn{2}{c|}{$0$} & $B(A_o, c)$ \\
+	$P_{blocking}$ & \multicolumn{2}{c|}{$0$} & $\operatorname{B}(A_o, c)$ \\
 	\hline
-	$P(W_q < t)$ & $1 - A_o \cdot e^{- \mu \cdot (1-A_o) \cdot t}$ & $1 - C(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}$ & \\
+	$P(W_q < t)$ & $1 - A_o \cdot e^{- \mu \cdot (1-A_o) \cdot t}$ & $1 - \operatorname{C}(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}$ & \\
 	\hline
-	$P(W_q > t)$ & $A_o \cdot e^{- \mu \cdot (1-A_o) \cdot t}$ & $C(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}$ & \\
+	$P(W_q > t)$ & $A_o \cdot e^{- \mu \cdot (1-A_o) \cdot t}$ & $\operatorname{C}(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}$ & \\
 	\hline
 \end{tabular}
 

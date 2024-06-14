@@ -29,10 +29,16 @@ Cellular systems divide the covered area in smaller sections denoted \textbf{cel
 
 \begin{itemize}
 	\item All the frequencies of the available bandwidth will are assigned to a group of cells denoted as \textbf{cluster}, which will have a fixed number of cells $J$. These clusters will also be sections of the \textbf{coverage area}.
-	\item These radio systems are limited by interference. When designing them, a limit for interference is selected, called \textbf{protection rate} ($r_p$).
+	\item {
+		These radio systems are limited by interference. When designing them, a limit for interference is selected, called \textbf{protection rate} ($r_p$).
+
+		$$
+			R_p = 10 \log (r_p)
+		$$
+	}
 	\item The \textbf{co-channel distance} or reuse distance ($D$) is the distance between two cells using the same frequencies with respect to the protection rate.
 	\item User equipment will be separated by a distance $R$ from the access point.
-	\item Signals, both carrier ($c$) and interference ($i$) are attenuated along distance following a free-space path loss model with index $n$.
+	\item Signals, both carrier ($C$) and interference ($I$) are attenuated along distance following a free-space path loss model with index $n$.
 \end{itemize}
 
 \begin{figure}[H]
@@ -60,28 +66,28 @@ To understand interference we can develope the following relations:
 		$l_{b, i} = k (D - R)^n$
 	}
 	\item {
-			Received carrier signal:
+		Received carrier signal:
 
-		$c = \frac {P_t} {k \cdot R^n}$
+		$C = \frac {P_{tx}} {k \cdot R^n}$
 	}
 	\item {
 		Received interference:
 
-		$i = \frac {P_t} {k (D - R)^n}$
+		$I = \frac {P_{tx}} {k (D - R)^n}$
 	}
 	\item {
 		Carrier-to-interference ratio:
 
 		$
-			\left( \frac{c}{i} \right) = \left( \frac {D - R} {R} \right)^n \approxeq \left( \frac {D} {R} \right)^n
+			\left( \frac{C}{I} \right) = \left( \frac {D - R} {R} \right)^n \approxeq \left( \frac {D} {R} \right)^n
 		$
 	}
 \end{itemize}
 
-If $R$ and $D$ are decreased, holding a given $\left( \frac{c}{i} \right)$, we can increase the reuse of frequencies and system capacity. However, $R$ is lower bounded by the protection rate:
+If $R$ and $D$ are decreased, holding a given $\left( \frac{C}{I} \right)$, we can increase the reuse of frequencies and system capacity. However, $R$ is lower bounded by the protection rate:
 
 $$
-	\left( \frac{c}{i} \right) \ge r_p \rightarrow \left( \frac {D} {R} \right)^n \ge r_p
+	\left( \frac{C}{I} \right) \ge r_p \rightarrow \left( \frac {D} {R} \right)^n \ge r_p
 $$
 
 \subsubsection{Dimensioning}
@@ -93,16 +99,16 @@ $$
 		Mobile cellular systems are designed as blocking systems:
 
 		$$
-			GoS = p_B = \operatorname{B}(c, A_o)
+			GoS = P_B = \operatorname{B}(c, A_o)
 		$$
 
 		The offered traffic in a cell is:
 
 		$$
-			A_o = \operatorname{B}^{-1} (N - 1, p_B)
+			A_o = \operatorname{B}^{-1} (c, P_B)
 		$$
 		
-		Where $B^{-1}$ stands for Erlang B inverse function.
+		Where $\operatorname{B}^{-1}(\cdot)$ stands for Erlang B inverse function.
 
 		Assuming that the median call duration is $s$ seconds and the mean number of calls at Busy Hour is $\lambda_{user}$, the offered traffic per user will be:
 
@@ -122,12 +128,12 @@ $$
 		For the number of available channels:
 
 		$$
-			N_{cluster} = \frac {W} {\Delta f} = \frac {W} {f_{i} -  f_{i-1}}
+			N_{cluster} = \frac {BW} {\Delta f} = \frac {BW} {f_{i} -  f_{i-1}}
 		$$
 
 		Where:
 		\begin{itemize}
-			\item $W$: Available bandwidth for transmission or reception.
+			\item $BW$: Available bandwidth for transmission or reception.
 			\item $\Delta f$: Separation between radio frequency channels.
 		\end{itemize}
 
@@ -171,7 +177,7 @@ $$
 		The whole number of channels for traffic in the coverage area will be:
 
 		$$
-			Q \cdot J \cdot (N - 1) \approxeq C \cdot \frac {S} {J \cdot S_{cell}}
+			N = Q \cdot J \cdot (N_{cell} - N_{signaling}) \approxeq N_{cluster} \cdot \frac {S} {J \cdot S_{cell}}
 		$$
 
 		And the total number of users will be:
@@ -195,7 +201,7 @@ An inclined coordinated systems is used with a slope of 60 degrees.
 \begin{figure}[H]
 	\centering
 	\includegraphics[
-		width=10cm,
+		width=9cm,
 		%height=15cm
 	]{images/Tema 4/Cellular geometry.png}
 	\caption{
@@ -204,42 +210,97 @@ An inclined coordinated systems is used with a slope of 60 degrees.
 	}
 \end{figure}
 
-The parameters to study cellular geometry are:
-\begin{itemize}
-	\item $D$: Co-channel distance. One of them is located in the origin of coordinates.
-	\item $d$: Lattice step.
-	\item $i_c$, $j_c$: co-channel node coordinates.
-	\item $J$: The numbers obtained given integer values to $i_c$ and $j_c$ are known as rhombic numbers (1, 3, 4, 7, 9, 12, 13, 16, 19, 21, 25, 27, 28, 36, 37, 48, ...). $J$ also represents the cluster size, being each cell surrounded by 6 co-channel cells at distance $D$.
-\end{itemize}
-
-Relations are:
+As a result of this design:
 \begin{itemize}
 	\item {
-		Distance from origin to the co-channel cell:
+		Cells will have a radius $R$ related to cell area:
 
-		$D = \left( d(i, j) \right)^2 = d^2 (i^2 + j^2 + i \cdot j)$
+		$S_{cell} = \frac {3 \sqrt{3}}{2} R^2$
 	}
-	\item $d = R \sqrt{3}$
-	\item $\left( \frac {D} {d} \right)^2 = i_{c}^2 + j_{c}^2 + i_{c} \cdot j_{c} = J$
-	\item $J = \frac {1} {3} \left( \frac {D} {R} \right)^2$
+	\item Having the node of a cell (geometrical center) at $(0, 0)$, we must select the coordinates of the node of the cell with the same frequency, the \textbf{co-channel node coordinates}: $i_c$, $j_c$
+	\item The distance between the nodes of two neighboring cells will be the \textbf{lattice step} and will depend on co-channel node coordinates selected as well as the radius: $d = d(i_c, j_c) = R \cdot \sqrt{3}$
+	\item Each cell will be surrounded by 6 co-channel cells at \textbf{co-channel distance} $D$.
+	\item Only a limited set of natural numbers, known as \textbf{rhombic numbers} (1, 3, 4, 7, 9, 12, 13, 16, 19, 21, 25, 27, 28, 36, 37, 48, ...) can be given to the cluster size $J$ in order to avoid two co-channel cells face to each other.
+
+\end{itemize}
+
+Some useful relations are:
+\begin{itemize}
+	\item {
+		Co-channel distance, lattice step, co-channel node coordinates and cluster size:
+
+		$$
+			D = d \cdot \sqrt{(i_{c}^2 + j_{c}^2 + i_{c} \cdot j_{c})} = d \cdot \sqrt{J}
+		$$
+
+		$$\updownarrow$$
+
+		$$
+			J = \left( \frac {D} {d} \right)^2 = i_{c}^2 + j_{c}^2 + i_{c} \cdot j_{c}
+		$$
+
+		$$\updownarrow$$
+
+		$$
+			d = \frac {D} {\sqrt{(i_{c}^2 + j_{c}^2 + i_{c} \cdot j_{c})}} = \frac{D}{\sqrt{J}}
+		$$
+	}
+	\item {
+		Co-channel distance, radius, co-channel node coordinates and cluster size:
+
+		$$
+			D = R \cdot \sqrt{3 (i_{c}^2 + j_{c}^2 + i_{c} \cdot j_{c})} = R \cdot \sqrt{3 J}
+		$$
+
+		$$\updownarrow$$
+
+		$$
+			J = \frac{1}{3} \left( \frac{D}{R} \right)^2 = i_{c}^2 + j_{c}^2 + i_{c} \cdot j_{c}
+		$$
+
+		$$\updownarrow$$
+
+		$$
+			R = \frac {D} {\sqrt{3 (i_{c}^2 + j_{c}^2 + i_{c} \cdot j_{c})}} = \frac{D}{\sqrt{3 J}}
+		$$
+	}
 	\item {
 		$J$ is lower bounded by protection rate:
 		\begin{itemize}
 			\item {
 				Signal at the edge of the cell and interference at the center:
 
-				$\left( \frac {c} {i} \right)_{TOT} = \frac {1} {6} \left( \frac {D} {R} \right)^n \rightarrow J = \frac {1} {3} \left[ 6 \left( \frac {c} {i} \right)_{TOT} \right]^{\frac {2} {n}}$
+				$$
+					\left( \frac{C}{I} \right) = \frac {1} {6} \left( \frac {D} {R} \right)^n \rightarrow
+					J = \frac {1} {3} \left[ 6 \left( \frac{C}{I} \right) \right]^{\frac {2} {n}}
+				$$
 
-				$\left( \frac {c} {i} \right)_{TOT} \geq r_p \rightarrow J \geq \frac {1} {3} \left( 6 r_p \right)^{\frac{2}{n}}$
+				$$
+					\left( \frac{C}{I} \right) \geq r_p \rightarrow
+					J \geq \frac {1} {3} \left( 6 r_p \right)^{\frac{2}{n}}
+				$$
 			}
 			\item {
 				Signal and interference at the edge:
 
-				$\left( \frac {c} {i} \right)_{TOT} = \frac {1} {6} \left( \frac {D - R} {R} \right)^n \rightarrow J = \frac {1} {3} \left( 1 + \left[ 6 \left( \frac {c} {i} \right)_{TOT} \right]^{\frac {1} {n}} \right)^2$
+				$$
+					\left( \frac{C}{I} \right) = \frac {1} {6} \left( \frac {D - R} {R} \right)^n \rightarrow
+					J = \frac {1} {3} \left( 1 + \left[ 6 \left( \frac{C}{I} \right) \right]^{\frac {1} {n}} \right)^2
+				$$
 
-				$\left( \frac {c} {i} \right)_{TOT} \geq r_p \rightarrow J \geq \frac {1} {3} \left[ 1 + \left( 6 r_p \right)^{\frac{1}{n}} \right]^2$
+				$$
+					\left( \frac{C}{I} \right) \geq r_p \rightarrow
+					J \geq \frac {1} {3} \left[ 1 + \left( 6 r_p \right)^{\frac{1}{n}} \right]^2
+				$$
 			}
 		\end{itemize}
+	}
+	\item {
+		Bit error rate for mobile problems:
+
+		$$
+			BER = \operatorname{Q} \left( \sqrt{2 \gamma \frac{E_b}{N_0}} \right)
+		$$
 	}
 \end{itemize}
 
@@ -304,7 +365,7 @@ A set of two-way radio systems. Usually not directly connected to public telepho
 They are modeled as waiting systems:
 
 $$
-	GoS = \operatorname{P}(W_q > \frac{1}{\mu}) = \operatorname{C}(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}
+	GoS = \operatorname{P} \left( W_q > \frac{1}{\mu} \right) = \operatorname{C}(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}
 $$
 
 The PMR main characteristics are:
@@ -463,9 +524,19 @@ GSM main characteristics are:
 	\item {
 		Protection co-channel rate:
 
-		$\frac {C} {I_c} = 9 [dB]$
+		$$
+			R_p = 9 [dB]
+		$$
 
-		$\frac {S} {I} = 10 \cdot \log \left( \frac {\left( \sqrt{3 J} \right)^n} {i_0} \right)$
+		$$
+			\left( \frac{S}{I} \right) = \frac {(\sqrt{3 J})^n} {i_o}
+		$$
+
+		$$
+			\left( \frac{S}{I} \right)_{dB} = 10 \log \left( \frac {(\sqrt{3 J})^n} {i_o} \right)
+		$$
+
+		As we saw, $i_o$, the number of sides of the cell, will be typically 6, resulting in previous expressions.
 	}
 	\item Channel bandwidth: 200 kHz 8 channels/carrier
 	\item Doppler distortion: Up to 200 km/h can be compensated.

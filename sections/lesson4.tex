@@ -61,26 +61,26 @@ To understand interference we can develope the following relations:
 	\item {
 		Basic propagation losses:
 
-		$l_{b, c} = k \cdot R^n$
+		$$l_{b, c} = k \cdot R^n$$
 
-		$l_{b, i} = k (D - R)^n$
+		$$l_{b, i} = k (D - R)^n$$
 	}
 	\item {
 		Received carrier signal:
 
-		$C = \frac {P_{tx}} {k \cdot R^n}$
+		$$C = \frac {P_{tx}} {k \cdot R^n}$$
 	}
 	\item {
 		Received interference:
 
-		$I = \frac {P_{tx}} {k (D - R)^n}$
+		$$I = \frac {P_{tx}} {k (D - R)^n}$$
 	}
 	\item {
 		Carrier-to-interference ratio:
 
-		$
-			\left( \frac{C}{I} \right) = \left( \frac {D - R} {R} \right)^n \approxeq \left( \frac {D} {R} \right)^n
-		$
+		$$
+			\left( \frac{C}{I} \right) = \left( \frac {D - R} {R} \right)^n \underset{\text{close to cell node}}{\approxeq} \left( \frac {D} {R} \right)^n
+		$$
 	}
 \end{itemize}
 
@@ -88,6 +88,12 @@ If $R$ and $D$ are decreased, holding a given $\left( \frac{C}{I} \right)$, we c
 
 $$
 	\left( \frac{C}{I} \right) \ge r_p \rightarrow \left( \frac {D} {R} \right)^n \ge r_p
+$$
+
+We modeled a case in which a single co-channel cell was generating interference, but for $i_0$ co-channel cells surrounding the cell at the same distance, we would have:
+
+$$
+	I = \frac {i_0 \cdot P_{tx}} {k (D - R)^n} \rightarrow \left( \frac{C}{I} \right) = \frac{1}{i_0} \left( \frac {D - R} {R} \right)^n \underset{\text{close to cell node}}{\approxeq} \frac{1}{i_0} \left( \frac {D} {R} \right)^n
 $$
 
 \subsubsection{Dimensioning}
@@ -219,7 +225,13 @@ As a result of this design:
 	}
 	\item Having the node of a cell (geometrical center) at $(0, 0)$, we must select the coordinates of the node of the cell with the same frequency, the \textbf{co-channel node coordinates}: $i_c$, $j_c$
 	\item The distance between the nodes of two neighboring cells will be the \textbf{lattice step} and will depend on co-channel node coordinates selected as well as the radius: $d = d(i_c, j_c) = R \cdot \sqrt{3}$
-	\item Each cell will be surrounded by 6 co-channel cells at \textbf{co-channel distance} $D$.
+	\item {
+		Each cell will be surrounded by 6 co-channel cells at \textbf{co-channel distance} $D$:
+
+		$$
+			i_0 = 6 \rightarrow I = \frac {6 \cdot P_{tx}} {k (D - R)^n} \rightarrow \left( \frac{C}{I} \right) = \frac{1}{6} \left( \frac {D - R} {R} \right)^n \underset{\text{close to cell node}}{\approxeq} \frac{1}{6} \left( \frac {D} {R} \right)^n
+		$$
+	}
 	\item Only a limited set of natural numbers, known as \textbf{rhombic numbers} (1, 3, 4, 7, 9, 12, 13, 16, 19, 21, 25, 27, 28, 36, 37, 48, ...) can be given to the cluster size $J$ in order to avoid two co-channel cells face to each other.
 
 \end{itemize}
@@ -339,7 +351,18 @@ This structure has some advantages:
 
 \begin{itemize}
 	\item The BTS can be supported by adjacent BTS cells, so we save in infrastructures.
-	\item The co-channel interference is much lower due to the directivity of antennas. Thus, J can be lower and then, the system capacity is higher due to the higher frequency reuse.
+	\item The co-channel interference is much lower due to the directivity of antennas.
+	\item Thus, cluster size $J$ can be lower and then, the system capacity is higher due to the higher frequency reuse.
+\end{itemize}
+
+For example, if a cell is divided in two sectors, radius is reduced by half, surface is divided by four and capacity is multiplied by four.
+
+Some drawbacks include:
+
+\begin{itemize}
+	\item Cost increment.
+	\item BTS placement needs to be very precise.
+	\item The probability of a hand-off increases.
 \end{itemize}
 
 \begin{figure}[H]
@@ -390,8 +413,8 @@ Other characteristics:
 Channel assignment:
 
 \begin{itemize}
-	\item Fixed assignment: the channel is fixed for a group of M users that need to share it. It is simpler but lower performance. Used if the number of users is low.
-	\item Trunked assignment: pool of N channels being shared for M users. More complex but much more efficient.
+	\item Fixed assignment: the channel is fixed for a group of $M$ users that need to share it. It is simpler but lower performance. Used if the number of users is low.
+	\item Trunked assignment: pool of $N$ channels being shared for $M$ users. More complex but much more efficient.
 \end{itemize}
 
 In case they use trunked assignment:

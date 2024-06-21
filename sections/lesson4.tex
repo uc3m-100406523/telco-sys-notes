@@ -81,6 +81,10 @@ To understand interference we can develope the following relations:
 		$$
 			\left( \frac{C}{I} \right) = \left( \frac {D - R} {R} \right)^n \underset{\text{close to cell node}}{\approxeq} \left( \frac {D} {R} \right)^n
 		$$
+
+		$$
+			\left( \frac{C}{I} \right)_{dB} = 10 \log \left( \frac{C}{I} \right)
+		$$
 	}
 \end{itemize}
 
@@ -88,6 +92,10 @@ If $R$ and $D$ are decreased, holding a given $\left( \frac{C}{I} \right)$, we c
 
 $$
 	\left( \frac{C}{I} \right) \ge r_p \rightarrow \left( \frac {D} {R} \right)^n \ge r_p
+$$
+
+$$
+	\left( \frac{C}{I} \right)_{dB} \ge R_p \rightarrow 10 \log \left[ \left( \frac {D} {R} \right)^n \right] \ge R_p
 $$
 
 We modeled a case in which a single co-channel cell was generating interference, but for $i_0$ co-channel cells surrounding the cell at the same distance, we would have:
@@ -280,7 +288,7 @@ Some useful relations are:
 		$J$ is lower bounded by protection rate:
 		\begin{itemize}
 			\item {
-				Signal at the edge of the cell and interference at the center:
+				Close to cell node:
 
 				$$
 					\left( \frac{C}{I} \right) = \frac {1} {6} \left( \frac {D} {R} \right)^n \rightarrow
@@ -293,7 +301,7 @@ Some useful relations are:
 				$$
 			}
 			\item {
-				Signal and interference at the edge:
+				Close to cell edge:
 
 				$$
 					\left( \frac{C}{I} \right) = \frac {1} {6} \left( \frac {D - R} {R} \right)^n \rightarrow
@@ -313,6 +321,8 @@ Some useful relations are:
 		$$
 			BER = \operatorname{Q} \left( \sqrt{2 \gamma \frac{E_b}{N_0}} \right)
 		$$
+
+		$\gamma$ will tipycally be 0.68.
 	}
 \end{itemize}
 
@@ -376,6 +386,93 @@ Some drawbacks include:
 		Cellular sectoring
 	}
 \end{figure}
+
+\subsubsection{Summary}
+
+\begin{tabular}{|c|}
+	\hline
+	$
+		\left( \frac{C}{I} \right) = \frac{1}{i_0} \left( \frac {D - R} {R} \right)^n \underset{\text{close to cell node}}{\approxeq} \frac{1}{i_0} \left( \frac {D} {R} \right)^n \ge r_p
+	$\\
+
+	$
+		GoS = P_B = \operatorname{B}(c, A_o)
+	$\\
+
+	$
+		BER = \operatorname{Q} \left( \sqrt{2 \gamma \frac{E_b}{N_0}} \right)
+	$\\
+
+	$\gamma = 0.68$\\
+
+	\hline
+	\textbf{Dimensioning}\\
+	\hline
+
+	$
+		m = \frac {A_o} {a_o}
+	$\\
+
+	$
+		N_{cluster} = \frac {BW} {\Delta f} = \frac {BW} {f_{i} -  f_{i-1}}
+	$\\
+
+	$
+		N_{cell} = \frac {N_{cluster}} {J}
+	$\\
+
+	$
+		c = N_{cell} - N_{signaling}
+	$\\
+
+	$
+		\rho_a = \frac {A_o} {S_{cell}} [E / km^2]
+	$\\
+
+	$
+		S_{cluster} = J \cdot S_{cell}
+	$\\
+
+	$
+		Q = \operatorname{ceil} \left( \frac {S} {S_{cluster}} \right) + 1 \approxeq \frac {S} {J \cdot S_{cell}}
+	$\\
+
+	$
+		N = Q \cdot J \cdot (N_{cell} - N_{signaling}) \approxeq N_{cluster} \cdot \frac {S} {J \cdot S_{cell}}
+	$\\
+
+	$
+		M = Q \cdot J \cdot m
+	$\\
+
+	\hline
+	\textbf{Hexagonal cells ($i_0 = 6$)}\\
+	\hline
+
+	$
+		S_{cell} = \frac {3 \sqrt{3}}{2} R^2
+	$\\
+
+	$
+		J = \left( \frac {D} {d} \right)^2 = \frac{1}{3} \left( \frac{D}{R} \right)^2 = i_{c}^2 + j_{c}^2 + i_{c} \cdot j_{c}
+	$\\
+
+	Close to cell node:
+
+	$
+		\left( \frac{C}{I} \right) = \frac {1} {6} \left( \frac {D} {R} \right)^n \rightarrow
+		J = \frac {1} {3} \left[ 6 \left( \frac{C}{I} \right) \right]^{\frac {2} {n}} \geq \frac {1} {3} \left( 6 r_p \right)^{\frac{2}{n}}
+	$\\
+
+	Close to cell edge:
+
+	$
+		\left( \frac{C}{I} \right) = \frac {1} {6} \left( \frac {D - R} {R} \right)^n \rightarrow
+		J = \frac {1} {3} \left( 1 + \left[ 6 \left( \frac{C}{I} \right) \right]^{\frac {1} {n}} \right)^2 \geq \frac {1} {3} \left[ 1 + \left( 6 r_p \right)^{\frac{1}{n}} \right]^2
+	$\\	
+
+	\hline
+\end{tabular}
 
 \subsection{PMR and PMT systems}
 

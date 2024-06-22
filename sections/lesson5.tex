@@ -137,41 +137,32 @@ There are two basic orbit types:
 	}
 \end{figure}
 
-\subsubsection{View angles}
-
-Some angles must studied:
-\begin{itemize}
-	\item Elevation Angle ($\hat{El}$): From horizontal to satellite direction.
-	\item Azimuth Angle ($\hat{A}$): From North to East of horizontal projection of the satellite.
-\end{itemize}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[
-		width=10cm,
-		%height=15cm
-	]{images/Tema 5/View angles.png}
-	\caption{
-		\label{fig:unit5_view_angles}
-		View angles
-	}
-\end{figure}
-
 \subsubsection{Coverage}
 
 A different coverage is provided depending on the Earth antenna elevation:
 \begin{itemize}
 	\item Geometrical coverage: The Earth area that is visible from the satellite. It is the tangent cone from satellite.
-	\item Radio electric coverage: It is lower because antennas need at least 5º on inclination due to obstacles and noise.
+	\item Radio electric coverage: It is lower because antennas need at least $5^{\circ}$ on inclination due to obstacles and noise.
 \end{itemize}
 
 \subsubsection{Orientation}
 
 In order to study satellite orientation, we consider the following variables:
 \begin{itemize}
-	\item Earth radius: $R$
+	\item {
+		Equivalent Earth radius:
+		$$
+			R = 6377 [km]
+		$$
+	}
 	\item Satellite high: $h$
-	\item Relative longitude.
+	\item {
+		Orbit radius:
+		$$
+			a = R + h
+		$$
+	}
+	\item Terrestrial pole: $P$
 	\item Longitude origin (positive values for East and negative values for West): $Q$
 	\item {
 		Greenwich Meridian:
@@ -231,6 +222,160 @@ In order to study satellite orientation, we consider the following variables:
 		Orientation
 	}
 \end{figure}
+
+\subsubsection{View angles}
+
+Some angles must studied:
+\begin{itemize}
+	\item {
+		Elevation angle ($\hat{El}$): From horizontal to satellite direction.
+		$$
+			\hat{a} = \arccos \left( \cos (\varphi) \cdot \cos (\lambda) \right)
+		$$
+		$$
+			\hat{El} = \arctan \left( \frac {\cos (\hat{a}) - \frac{R}{R+h}} {\sin (\hat{a})} \right)
+		$$
+	}
+	\item {
+		Azimuth angle ($\hat{A}$): From North to East of horizontal projection of the satellite.
+		$$
+			\hat{E} = \arctan \left( \frac {\tan (\varphi)} {\sin (\lambda)} \right)
+		$$
+		$$
+			\hat{A} = \left\lbrace \begin{matrix}
+				180^{\circ} - \hat{E} \quad \text{if NW} \\
+				180^{\circ} + \hat{E} \quad \text{if NE} \\
+				\hat{E} \quad \text{if SW} \\
+				360^{\circ} - \hat{E} \quad \text{if SE}
+			\end{matrix}\right.
+		$$
+	}
+	\item {
+		Central angle (angle created by satellite with ground station seen from Earth centre):
+		$$
+			\gamma = \arccos \left( \frac {R} {R + h} \cos(\hat{El}) \right) - \hat{El}
+		$$
+		Some useful relations with central angle:
+		$$
+			d = h \sqrt{1 + \left( \frac{R}{h} \right)^2 - 2 \frac{R}{h} \cos(\gamma)}
+		$$
+		$$
+			\cos (\hat{El}) =
+			\frac {h \cdot \sin (\gamma)} {d} =
+			\frac {\sin (\gamma)} {\sqrt{1 + (\frac{R}{h})^2 - 2 \frac{R}{h} \cos(\gamma)}}
+		$$
+	}
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[
+		width=10cm,
+		%height=15cm
+	]{images/Tema 5/View angles.png}
+	\caption{
+		\label{fig:unit5_view_angles}
+		View angles
+	}
+\end{figure}
+
+\subsubsection{LEO constellations}
+
+Coverage area per satellite is limited, so a large number of satellites for global coverage is needed. They are organized in constellations, LEO orbits, which are circular (polar or tilted) and elliptical.
+
+Basic LEO parameters:
+\begin{itemize}
+	\item Circular orbits are assumed (eccentricity is 0).
+	\item {
+		Kepler constant:
+
+		$$
+			k = G \cdot m_E = 3.98601352 \cdot 10^5 [km^3/s^2]
+		$$
+	}
+	\item {
+		Linear speed:
+		$$
+			v_s =
+			\sqrt {k \cdot \left( \frac {2} {R + h} - \frac {1} {a} \right)} =
+			\sqrt {\frac {k} {R + h}}
+		$$
+	}
+	\item {
+		Angular speed:
+		$$
+			\omega_s =
+			\frac {v_s} {R + h} =
+			\sqrt {\frac {k} {(R + h)^3}}
+		$$
+	}
+	\item {
+		Orbit period:
+		$$
+			T_s =
+			2 \pi \sqrt{ \frac {(R + h)^3} {k} }
+		$$
+	}
+	\item {
+		Distance from the edge of the coverage:
+		$$
+			d_{coverage} =
+			\sqrt{R^2 + (R + h)^2 - 2 R (R + h) \cos(\gamma)}
+		$$
+	}
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[
+		width=5cm,
+		%height=15cm
+	]{images/Tema 5/LEO parameters.png}
+	\caption{
+		\label{fig:unit5_LEO_param}
+		LEO parameters
+	}
+\end{figure}
+
+The minimum elevation angle is a very important parameter in these systems. It is the angle the terminal sees the satellite at when it is at the coverage edge. It determines the link availability and it must be taken into account for handovers.
+
+LEO system design consists on a trade-off between number of satellites, delay and losses. In order to estimate the minimum number of satellites we must have in account the region covered by the sphere’s cone:
+
+$$
+	S = 2 \pi R^2 \left[ 1 - \cos(\gamma) \right]
+$$
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[
+		width=6cm,
+		%height=15cm
+	]{images/Tema 5/Region covered.png}
+	\caption{
+		\label{fig:unit5_region_LEO}
+		Region covered by LEO orbit
+	}
+\end{figure}
+
+The minimum number of satellites is:
+
+$$
+	N = \frac {4 \pi R^2} {S} = \frac {2} {1 - \cos(\gamma)}
+$$
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[
+		width=14cm,
+		%height=15cm
+	]{images/Tema 5/Number of satellites.png}
+	\caption{
+		\label{fig:unit5_number_sat_LEO}
+		Minimum number of satellites for different parameters
+	}
+\end{figure}
+
+For a larger covered area we need a higher number of satellites. If we increase the central angle $\gamma$, we need a lower number of satellites, but that produces delay.
 
 \subsubsection{Eclipses}
 
@@ -378,28 +523,31 @@ There are two types of antennas for satellites:
 
 The most interesting ones are aperture antennas, whoch are horns and reflectors.
 
-Main relations are:
+Main parameters are:
 
 \begin{itemize}
+	\item Antenna diameter: $D$
+	\item Wavelength: $\lambda$
+	\item {
+		Aperture:
+		$$
+			A = \frac {\pi D^2} {4}
+		$$
+	}
 	\item {
 		Antenna gain:
 
 		$$
-			G = \eta \frac {4 \pi A} {\lambda^2}
+			g = \eta \left( \frac {\pi D} {\lambda} \right)^2 = \eta \frac {4 \pi A} {\lambda^2}
+		$$
+		$$
+			G = 10 \log (g)
 		$$
 	}
 	\item {
 		Beam width:
-
 		$$
 			\phi_{3dB} = \frac {70 \lambda} {D}
-		$$
-	}
-	\item {
-		Aperture:
-
-		$$
-			A = \frac {\pi D^2} {4}
 		$$
 	}
 \end{itemize}
@@ -466,26 +614,26 @@ Two steps must be followed to obtain link budget:
 		\begin{itemize}
 			\item {
 				Uplink link budget:
-
-				$\left( \frac {C} {N_0} \right)_U = EIRP_{ES} + \left( \frac {G} {T} \right)_{sat} - L_{bfU} - 10 \log(K) - IB [dBHz]$
-
-				$\left( \frac {C} {N} \right)_U = EIRP_{ES} + \left( \frac {G} {T} \right)_{sat} - L_{bfU} - 10 \log(KB) - IB [dB]$
+				$$
+					\left( \frac {C} {N_0} \right)_{up} = EIRP_{sta} + \left( \frac {G} {T} \right)_{sat} - L_{bfU} - 10 \log(K) - IBO [dBHz]
+				$$
+				$$
+					\left( \frac {C} {N} \right)_{up} = EIRP_{sta} + \left( \frac {G} {T} \right)_{sat} - L_{bfU} - 10 \log(KB) - IBO [dB]
+				$$
 			}
 			\item {
 				Downlink link budget:
-
-				$\left( \frac {C} {N_0} \right)_D = EIRP_{sat} + \left( \frac {G} {T} \right)_{ES} - L_{bfD} - 10 \log(K) - OB [dBHz]$
-
-				$\left( \frac {C} {N} \right)_D = EIRP_{sat} + \left( \frac {G} {T} \right)_{ES} - L_{bfU} - 10 \log(KB) - OB [dB]$
+				$$
+					\left( \frac {C} {N_0} \right)_{down} = EIRP_{sat} + \left( \frac {G} {T} \right)_{ES} - L_{bfD} - 10 \log(K) - OBO [dBHz]
+				$$
+				$$
+					\left( \frac {C} {N} \right)_{down} = EIRP_{sat} + \left( \frac {G} {T} \right)_{ES} - L_{bfU} - 10 \log(KB) - OBO [dB]
+				$$
 			}
 		\end{itemize}
 	}
 	\item {
-		Verify if the required quality criteria is accomplished:
-		Some possible criteria are:
-
-		$\frac {e_b} {n_0} = \frac {c} {n_0} \cdot \frac {1} {R_b}$
-
+		Verify if the required quality criteria is accomplished. Some possible criteria are:
 		\begin{itemize}
 			\item Carrier to Noise Ratio: $\frac {C} {N} [dB]$
 			\item Spectral Noise density: $N_0 [dB/Hz]$, $n_0 [W/Hz]$
@@ -505,15 +653,15 @@ Two steps must be followed to obtain link budget:
 			\item Merit factor at receiver: $\frac {G} {T} [dB/K]$
 			\item Energy per bit: $eb (J/b, W/b)$
 			\item Binary data rate: $R_b [b/s]$
-			\item Input/Output Backoff: $\frac {IB} {OB} [dB]$
+			\item Input/Output Backoff: $\frac {IBO} {OBO} [dB]$
 		\end{itemize}
 	}
 \end{itemize}
 
-The link has two sides, an uplink and a downlink with different $\left( \frac {C} {N} \right)_U$ and $\left( \frac {C} {N} \right)_D$. If the noise is uniformly distributed within the bandwidth ($B$), then $N = N_0 \cdot B$.
+The link has two sides, an uplink and a downlink with different $\left( \frac {C} {N} \right)_{up}$ and $\left( \frac {C} {N} \right)_{down}$. If the noise is uniformly distributed within the bandwidth ($B$), then $N = N_0 \cdot B$.
 
 $$
-	\left( \frac {c} {n_0} \right)_{T}^{-1} = \left( \frac {c} {n_0} \right)_{U}^{-1} + \left( \frac {c} {n_0} \right)_{D}^{-1}
+	\left( \frac {C} {N_0} \right)_{total}^{-1} = \left( \frac {C} {N_0} \right)_{up}^{-1} + \left( \frac {C} {N_0} \right)_{down}^{-1}
 $$
 
 \section{Very Small Aperture Terminals (VSAT) services}
@@ -577,7 +725,7 @@ For mobile communication purposes, GEO and LEO are the preferred orbits. Tundra 
 	\hline
 	Doppler shift			& 0							& Large \\
 	\hline
-	Elevation				& 10º - 90º					& 10º - 90º \\
+	Elevation				& $10^{\circ} - 90^{\circ}$					& $10^{\circ} - 90^{\circ}$ \\
 	\hline
 	Satellite				& Big and complex			& Small \\
 	\hline
@@ -590,129 +738,6 @@ For mobile communication purposes, GEO and LEO are the preferred orbits. Tundra 
 	Total cost				& Low						& High \\
 	\hline
 \end{tabular}
-
-\subsection{LEO constellations}
-
-Coverage area per satellite is limited, so a large number of satellites for global coverage is needed. They are organized in constellations, LEO orbits, which are circular (polar or tilted) and elliptical.
-
-Basic LEO parameters:
-\begin{itemize}
-	\item {
-		Circular orbits are assumed:
-
-		$$e = 0$$
-	}
-	\item {
-		Equivalent Earth radius:
-
-		$$R = 6377 [km]$$
-	}
-	\item {
-		Orbit radius ($a$).
-	}
-	\item {
-		Instantaneous high ($h$).
-	}
-	\item {
-		Kepler constant:
-
-		$$
-			k = G \cdot m_E = 3.98601352 \cdot 10^5 [km^3/s^2]
-		$$
-	}
-	\item {
-		Linear speed:
-
-		$$
-			v_s =
-			\sqrt {k \cdot \left( \frac {2} {R + h} - \frac {1} {a} \right)} =
-			\sqrt {\frac {k} {R + h}}
-		$$
-	}
-	\item {
-		Angular speed:
-
-		$$
-			\omega_s =
-			\frac {v_s} {R + h} =
-			\sqrt {\frac {k} {(R + h)^3}}
-		$$
-	}
-	\item {
-		Orbit period:
-
-		$$
-			T_s =
-			2 \pi \sqrt{ \frac {(R + h)^3} {k} }
-		$$
-	}
-	\item {
-		Central angle:
-
-		$$
-			\gamma = \cos^{-1} \left( \frac {R} {R + h} \cos(\hat{El}) \right) - \hat{El}
-		$$
-	}
-	\item {
-		Distance from the edge of the coverage:
-
-		$$
-			d = \sqrt{r_{E}^2 + (R + h)^2 - 2 R (R + h) \cos(\gamma)}
-		$$
-	}
-\end{itemize}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[
-		width=5cm,
-		%height=15cm
-	]{images/Tema 5/LEO parameters.png}
-	\caption{
-		\label{fig:unit5_LEO_param}
-		LEO parameters
-	}
-\end{figure}
-
-The minimum elevation angle is a very important parameter in these systems. It is the angle the terminal sees the satellite at when it is at the coverage edge. It determines the link availability and it must be taken into account for handovers.
-
-LEO system design consists on a trade-off between number of satellites, delay and losses. In order to estimate the minimum number of satellites we must have in account the region covered by the sphere’s cone:
-
-$$
-	S = 2 \pi R^2 \left[ 1 - \cos(\gamma) \right]
-$$
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[
-		width=6cm,
-		%height=15cm
-	]{images/Tema 5/Region covered.png}
-	\caption{
-		\label{fig:unit5_region_LEO}
-		Region covered by LEO orbit
-	}
-\end{figure}
-
-The minimum number of satellites is:
-
-$$
-	N = \frac {4 \pi R^2} {S} = \frac {2} {1 - \cos(\gamma)}
-$$
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[
-		width=14cm,
-		%height=15cm
-	]{images/Tema 5/Number of satellites.png}
-	\caption{
-		\label{fig:unit5_number_sat_LEO}
-		Minimum number of satellites for different parameters
-	}
-\end{figure}
-
-For a larger covered area we need a higher number of satellites. If we increase the central angle $\gamma$, we need a lower number of satellites, but that produces delay.
 
 \section{Satellite navigation systems}
 
@@ -729,7 +754,7 @@ $$
 There are many source of errors (distance, clocks, propagation, \ldots). The propagation effect due to ionosphere can be corrected with the adequate model and measurement. It has been shown that:
 
 $$
-	R_m = R + \frac {A} {f^2}
+	R_m = R' + \frac {A} {f^2}
 $$
 
 Where $A$ is the ionosphere parameter that depends on its conditions.

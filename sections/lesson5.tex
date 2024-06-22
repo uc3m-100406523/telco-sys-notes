@@ -37,7 +37,7 @@ Satallite systems provide a series of services to complement terrestrial communi
 	\item Services between satellites.
 \end{itemize}
 
-\subsection{Architecture}
+\subsection{Architecture of satellite communication systems}
 
 Satellite systems are implemented through the following elements:
 \begin{itemize}
@@ -66,14 +66,14 @@ Satellite systems are implemented through the following elements:
 	}
 \end{figure}
 
-\subsection{Specifications}
+\subsection{Specifications of satellite communication systems}
 
 The design of a satellite system depends on radio frequency and geometrical aspects:
 \begin{itemize}
 	\item Orbit: Most applications use Geostationary Orbit (GEO). However, for Personal Communications Systems (PCS) other orbits are being used such as Medium Earth Orbit (MEO) and Low Earth Orbit (LEO).
 	\item Coverage: Depending on orbit and antenna system, satellites can provide a global beam ($1/3$ of Earth surface), local beam (up to 800 $km^2$) or beamforming (intermediate coverage, such as a country, an island, etc.).
 	\item Connectivity: Capacity of linking by using the different ground stations. It depends on the satellite’s capacity and multiple access techniques.
-	\item Multiple access: The way the satellite is shared, typically FDMA, TDMA or CDMA.
+	\item Multiple access and shared access: The way the satellite is shared, typically FDMA, TDMA or CDMA.
 	\item Frequency band and bandwidth: Different frequency bands are used depending on service and availability (originally band C (6/4 GHz), later band Ku (14/11 GHz), Ka, \ldots). Higher frequencies means worse propagation. Satellite must implement reuse tecnniques (separating beams at the same frequency, polarization, \ldots), signal processing and efficient modulation (more channels for a given bandwidth).
 	\item Power: Satellite must carry out a trade off between distance to Earth and limitation on the on-board energy. Solar panels and Travelling Wave Tube Amplifiers (TWTA) provide enough power now. Current limitations are due to interferences from other satellites and EGSEs.
 \end{itemize}
@@ -141,8 +141,8 @@ There are two basic orbit types:
 
 Some angles must studied:
 \begin{itemize}
-	\item Elevation Angle ($El$): From horizontal to satellite direction.
-	\item Azimuth Angle ($A$): From North to East of horizontal projection of the satellite.
+	\item Elevation Angle ($\hat{El}$): From horizontal to satellite direction.
+	\item Azimuth Angle ($\hat{A}$): From North to East of horizontal projection of the satellite.
 \end{itemize}
 
 \begin{figure}[H]
@@ -169,23 +169,56 @@ A different coverage is provided depending on the Earth antenna elevation:
 
 In order to study satellite orientation, we consider the following variables:
 \begin{itemize}
-	\item Satellite ($S$): Located at $(\varphi_1, \lambda = 0)$.
-	\item Sub-satellite point ($S'$).
-	\item Earth station ($E$): Located at $(\varphi_0, \lambda)$.
-	\item Longitude origin ($Q$): Positive values for East and negative values for West.
-	\item Greenwich Meridian ($PQ$).
-	\item Earth radius ($R$).
-	\item Satellite high ($h$).
+	\item Earth radius: $R$
+	\item Satellite high: $h$
 	\item Relative longitude.
-	\item Satellite coordinates (Cartesian): $x_S = R + h$, $y_S = 0$, $z_S = 0$.
-	\item Earth station coordinates (Cartesian): $x_E = R \cdot \cos(\varphi) \cdot \cos(\lambda)$, $y_E = R \cdot \sin(\varphi) \cdot \cos(\lambda)$, $z_E = R \cdot \sin(\lambda)$.
+	\item Longitude origin (positive values for East and negative values for West): $Q$
+	\item {
+		Greenwich Meridian:
+		$$
+			PQ = (r, \varphi, \lambda) = (R, 0, \lambda)
+		$$
+	}
+	\item {
+		Satellite coordinates (spherical):
+		$$
+			S_{sphe} = (r, \varphi, \lambda) = (R + h, \varphi_1, 0)
+		$$
+	}
+	\item {
+		Satellite coordinates (Cartesian):
+		$$
+			S_{Cart} = (x_S, y_S, z_S) = (R + h, 0, 0)
+		$$
+	}
+	\item {
+		Sub-satellite point:
+		$$
+			S' = (r, \varphi, \lambda) = (R, \varphi_1, 0)
+		$$
+	}
+	\item {
+		Ground station coordinates (spherical):
+		$$
+			E_{sphe} = (r, \varphi, \lambda) = (R, \varphi_0, \lambda)
+		$$
+	}
+	\item {
+		Ground station coordinates (Cartesian):
+		$$
+			E_{Cart} = (x_E, y_E, z_E) =
+			(R \cdot \cos (\varphi) \cdot \cos (\lambda), R \cdot \sin (\varphi) \cdot \cos (\lambda), R \cdot \sin (\lambda) )
+		$$
+	}
+	\item {
+		Distance from satellite to ground station:
+		$$
+			ES = d =
+			\sqrt{ (x_S - x_E )^2 + y_{E}^2 + z_{E}^2 } =
+			\sqrt{ ( R + h )^2 + R^2 - 2 R \cdot (R+h) \cdot \cos(\varphi) \cdot \cos(\lambda) }
+		$$
+	}
 \end{itemize}
-
-$$
-	ES = d =
-	\sqrt{ (x_S - x_E )^2 + y_{E}^2 + z_{E}^2 } =
-	\sqrt{ ( R + h )^2 + R^2 - 2 R \cdot (R+h) \cdot \cos(\varphi) \cdot \cos(\lambda) }
-$$
 
 \begin{figure}[H]
 	\centering
@@ -282,7 +315,9 @@ Satellite space element can be studied in two different parts:
 				\end{itemize}
 				Main performance measurement is energy per bit to noise density ratio:
 
-				$\frac {e_b} {n_0} = \frac {c} {n_0} \cdot \frac {1} {R_b}$
+				$$
+					\frac {E_b} {N_0} = \frac {C} {N} \frac {B} {R_b} = \frac {C} {N_0} \frac {1} {R_b}
+				$$
 
 				Where $R_b$ is the binary data rate and c the carrier level.
 			}
@@ -565,12 +600,12 @@ Basic LEO parameters:
 	\item {
 		Circular orbits are assumed:
 
-		$e = 0$
+		$$e = 0$$
 	}
 	\item {
 		Equivalent Earth radius:
 
-		$r_E = 6377 [km]$
+		$$R = 6377 [km]$$
 	}
 	\item {
 		Orbit radius ($a$).
@@ -581,37 +616,49 @@ Basic LEO parameters:
 	\item {
 		Kepler constant:
 
-		$k = G \cdot m_E = 3.98601352 \cdot 10^5 [km^3/s^2]$
+		$$
+			k = G \cdot m_E = 3.98601352 \cdot 10^5 [km^3/s^2]
+		$$
 	}
 	\item {
 		Linear speed:
 
-		$v_s =
-		\sqrt {k \cdot \left( \frac {2} {r_E + h} - \frac {1} {a} \right)} =
-		\sqrt {\frac {k} {r_E + h}}$
+		$$
+			v_s =
+			\sqrt {k \cdot \left( \frac {2} {R + h} - \frac {1} {a} \right)} =
+			\sqrt {\frac {k} {R + h}}
+		$$
 	}
 	\item {
 		Angular speed:
 
-		$\omega_s =
-		\frac {v_s} {r_E + h} =
-		\sqrt {\frac {k} {(r_E + h)^3}}$
+		$$
+			\omega_s =
+			\frac {v_s} {R + h} =
+			\sqrt {\frac {k} {(R + h)^3}}
+		$$
 	}
 	\item {
 		Orbit period:
 
-		$T_s =
-		2 \pi \sqrt{ \frac {(r_E + h)^3} {k} }$
+		$$
+			T_s =
+			2 \pi \sqrt{ \frac {(R + h)^3} {k} }
+		$$
 	}
 	\item {
 		Central angle:
 
-		$\gamma = \cos^{-1} \left( \frac {r_E} {r_E + h} \cos(El) \right) - El$
+		$$
+			\gamma = \cos^{-1} \left( \frac {R} {R + h} \cos(\hat{El}) \right) - \hat{El}
+		$$
 	}
 	\item {
 		Distance from the edge of the coverage:
 
-		$d = \sqrt{r_{E}^2 + (r_E + h)^2 - 2 r_E (r_E + h) \cos(\gamma)}$
+		$$
+			d = \sqrt{r_{E}^2 + (R + h)^2 - 2 R (R + h) \cos(\gamma)}
+		$$
 	}
 \end{itemize}
 
@@ -632,7 +679,7 @@ The minimum elevation angle is a very important parameter in these systems. It i
 LEO system design consists on a trade-off between number of satellites, delay and losses. In order to estimate the minimum number of satellites we must have in account the region covered by the sphere’s cone:
 
 $$
-	S = 2 \pi R_{E}^2 \left[ 1 - \cos(\gamma) \right]
+	S = 2 \pi R^2 \left[ 1 - \cos(\gamma) \right]
 $$
 
 \begin{figure}[H]
@@ -650,7 +697,7 @@ $$
 The minimum number of satellites is:
 
 $$
-	N = \frac {4 \pi R_{E}^2} {S} = \frac {2} {1 - \cos(\gamma)}
+	N = \frac {4 \pi R^2} {S} = \frac {2} {1 - \cos(\gamma)}
 $$
 
 \begin{figure}[H]

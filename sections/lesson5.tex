@@ -243,10 +243,10 @@ Some angles must studied:
 		$$
 		$$
 			\hat{A} = \left\lbrace \begin{matrix}
-				180^{\circ} - \hat{E} \quad \text{if NW} \\
-				180^{\circ} + \hat{E} \quad \text{if NE} \\
-				\hat{E} \quad \text{if SW} \\
-				360^{\circ} - \hat{E} \quad \text{if SE}
+				180^{\circ} - \hat{E} & \text{if NW} \\
+				180^{\circ} + \hat{E} & \text{if NE} \\
+				\hat{E} & \text{if SW} \\
+				360^{\circ} - \hat{E} & \text{if SE}
 			\end{matrix}\right.
 		$$
 	}
@@ -610,24 +610,39 @@ Link budget measures the contribution of all the powers, gains and losses involv
 Two steps must be followed to obtain link budget:
 \begin{itemize}
 	\item {
-		Calculate the available received power at receiver input and the noise density:
+		Calculate the available received power at receiver input and the noise density. The link has two sides, an uplink and a downlink with different $\left( \frac {C} {N} \right)_{up}$ and $\left( \frac {C} {N} \right)_{down}$:
 		\begin{itemize}
+			\item {
+				General:
+				$$
+					\left( \frac {C} {N_0} \right)_{dB} = EIRP + \left( \frac {G} {T} \right) - L_{bf} - 10 \log(K) - BO [dBHz]
+				$$
+				$$
+					\left( \frac {C} {N} \right)_{dB} = EIRP + \left( \frac {G} {T} \right) - L_{bf} - 10 \log(KB) - BO [dBHz]
+				$$
+			}
 			\item {
 				Uplink link budget:
 				$$
-					\left( \frac {C} {N_0} \right)_{up} = EIRP_{sta} + \left( \frac {G} {T} \right)_{sat} - L_{bfU} - 10 \log(K) - IBO [dBHz]
+					\left( \frac {C} {N_0} \right)_{dB, up} = EIRP_{sta} + \left( \frac {G} {T} \right)_{sat} - L_{bf, up} - 10 \log(K) - IBO [dBHz]
 				$$
 				$$
-					\left( \frac {C} {N} \right)_{up} = EIRP_{sta} + \left( \frac {G} {T} \right)_{sat} - L_{bfU} - 10 \log(KB) - IBO [dB]
+					\left( \frac {C} {N} \right)_{dB, up} = EIRP_{sta} + \left( \frac {G} {T} \right)_{sat} - L_{bf, up} - 10 \log(KB) - IBO [dB]
 				$$
 			}
 			\item {
 				Downlink link budget:
 				$$
-					\left( \frac {C} {N_0} \right)_{down} = EIRP_{sat} + \left( \frac {G} {T} \right)_{ES} - L_{bfD} - 10 \log(K) - OBO [dBHz]
+					\left( \frac {C} {N_0} \right)_{dB, down} = EIRP_{sat} + \left( \frac {G} {T} \right)_{sta} - L_{bf, down} - 10 \log(K) - OBO [dBHz]
 				$$
 				$$
-					\left( \frac {C} {N} \right)_{down} = EIRP_{sat} + \left( \frac {G} {T} \right)_{ES} - L_{bfU} - 10 \log(KB) - OBO [dB]
+					\left( \frac {C} {N} \right)_{dB, down} = EIRP_{sat} + \left( \frac {G} {T} \right)_{sta} - L_{bf, down} - 10 \log(KB) - OBO [dB]
+				$$
+			}
+			\item {
+				Total:
+				$$
+					\left( \frac {C} {N_0} \right)_{total}^{-1} = \left( \frac {C} {N_0} \right)_{up}^{-1} + \left( \frac {C} {N_0} \right)_{down}^{-1}
 				$$
 			}
 		\end{itemize}
@@ -637,10 +652,10 @@ Two steps must be followed to obtain link budget:
 		\begin{itemize}
 			\item Carrier to Noise Ratio: $\frac {C} {N} [dB]$
 			\item Spectral Noise density: $N_0 [dB/Hz]$, $n_0 [W/Hz]$
-			\item Equivalent Isotropically Radiated Power: $EIRP [dBw]$
-			\item Gains: $G [dB]$
+			\item Equivalent Isotropic Radiated Power: $EIRP [dBW]$
+			\item Gains: $G_{rx}, G_{tx} [dB]$
 			\item Wavelength: $\lambda$
-			\item Distance to satellite: $D$
+			\item Distance to satellite: $d$
 			\item Bandwidth: $B [Hz]$
 			\item Losses (atmospheric, polarization, depointing antennas, \ldots): $L [dB]$
 			\item {
@@ -651,18 +666,14 @@ Two steps must be followed to obtain link budget:
 			\item Noise antenna temperature: $T_0 = 290 [K]$, $T_a$
 			\item Receiver Noise Figure: $F_t$
 			\item Merit factor at receiver: $\frac {G} {T} [dB/K]$
-			\item Energy per bit: $eb (J/b, W/b)$
+			\item Energy per bit: $E_b (J/b, W/b)$
 			\item Binary data rate: $R_b [b/s]$
-			\item Input/Output Backoff: $\frac {IBO} {OBO} [dB]$
+			\item Input/Output Backoff: $IBO [dB]$, $OBO [dB]$
 		\end{itemize}
 	}
 \end{itemize}
 
-The link has two sides, an uplink and a downlink with different $\left( \frac {C} {N} \right)_{up}$ and $\left( \frac {C} {N} \right)_{down}$. If the noise is uniformly distributed within the bandwidth ($B$), then $N = N_0 \cdot B$.
-
-$$
-	\left( \frac {C} {N_0} \right)_{total}^{-1} = \left( \frac {C} {N_0} \right)_{up}^{-1} + \left( \frac {C} {N_0} \right)_{down}^{-1}
-$$
+If the noise is uniformly distributed within the bandwidth ($B$), then $N = N_0 \cdot B$.
 
 \section{Very Small Aperture Terminals (VSAT) services}
 

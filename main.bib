@@ -1,0 +1,99 @@
+@comment{x-kbibtex-encoding=utf-8}
+
+@comment{
+	Webpage
+}
+
+@misc{eB2_main,
+	author = "{Evidence-Based Behavior S.L.}",
+	booktitle = {eB2 webpage},
+	editor = "{Evidence-Based Behavior S.L.}",
+	title = {Main page},
+	url = {https://eb2.tech}
+}
+
+@comment{
+	Documentation
+}
+
+@manual{android_context,
+	author = "{Google LLC}",
+	booktitle = {Android Developers Documentation},
+	editor = "{Google LLC}",
+	series = {Android Developers},
+	title = {Context},
+	url = {https://developer.android.com/reference/android/content/Context}
+}
+
+@comment{
+	Articles
+}
+
+@inproceedings{DBSCAN,
+	abstract = {Clustering algorithms are attractive for the task of class identification in spatial databases. However, the application to large spatial databases rises the following requirements for clustering algorithms: minimal requirements of domain knowledge to determine the input parameters, discovery of clusters with arbitrary shape and good efficiency on large databases. The well-known clustering algorithms offer no solution to the combination of these requirements. In this paper, we present the new clustering algorithm DBSCAN relying on a density-based notion of clusters which is designed to discover clusters of arbitrary shape. DBSCAN requires only one input parameter and supports the user in determining an appropriate value for it. We performed an experimental evaluation of the effectiveness and efficiency of DBSCAN using synthetic data and real data of the SEQUOIA 2000 benchmark. The results of our experiments demonstrate that (1) DBSCAN is significantly more effective in discovering clusters of arbitrary shape than the well-known algorithm CLAR-ANS, and that (2) DBSCAN outperforms CLARANS by a factor of more than 100 in terms of efficiency.},
+	author = {Ester, Martin and Kriegel, Hans-Peter and Sander, Jörg and Xu, Xiaowei},
+	booktitle = {Proceedings of the Second International Conference on Knowledge Discovery and Data Mining},
+	keywords = {arbitrary shape of clusters; clustering algorithms; efficiency on large spatial databases; handling noise},
+	location = {Portland, Oregon},
+	numpages = {6},
+	pages = {226–231},
+	publisher = {AAAI Press},
+	series = {KDD'96},
+	title = {A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise},
+	url = {http://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf; https://file.biolab.si/papers/1996-DBSCAN-KDD.pdf; http://www.cs.ecu.edu/~dingq/CSCI6905/readings/DBSCAN.pdf; https://www2.cs.uh.edu/~ceick/DM/WS-P1.pdf},
+	year = {1996}
+}
+
+@article{GDBSCAN,
+	abstract = {The clustering algorithm DBSCAN relies on a density-based notion of clusters and is designed to discover clusters of arbitrary shape as well as to distinguish noise. In this paper, we generalize this algorithm in two important directions. The generalized algorithm—called GDBSCAN—can cluster point objects as well as spatially extended objects according to both, their spatial and their nonspatial attributes. In addition, four applications using 2D points (astronomy), 3D points (biology), 5D points (earth science) and 2D polygons (geography) are presented, demonstrating the applicability of GDBSCAN to real-world problems.},
+	author = {Sander, Jörg and Ester, Martin and Kriegel, Hans-Peter and Xu, Xiaowei},
+	doi = {10.1023/A:1009745219419},
+	isbn = {1573-756X},
+	journal = {Data Mining and Knowledge Discovery},
+	note = {ID: Sander1998},
+	number = {2},
+	pages = {169–194},
+	title = {Density-Based Clustering in Spatial Databases: The Algorithm GDBSCAN and Its Applications},
+	url = {https://doi.org/10.1023/A:1009745219419},
+	volume = {2},
+	year = {1998}
+}
+
+@inbook{DenStream,
+	abstract = {Clustering is an important task in mining evolving data streams. Beside the limited memory and one-pass constraints, the nature of evolving data streams implies the following requirements for stream clustering: no assumption on the number of clusters, discovery of clusters with arbitrary shape and ability to handle outliers. While a lot of clustering algorithms for data streams have been proposed, they offer no solution to the combination of these requirements. In this paper, we present DenStream, a new approach for discovering clusters in an evolving data stream. The “dense” micro-cluster (named core-micro-cluster) is introduced to summarize the clusters with arbitrary shape, while the potential core-micro-cluster and outlier micro-cluster structures are proposed to maintain and distinguish the potential clusters and outliers. A novel pruning strategy is designed based on these concepts, which guarantees the precision of the weights of the micro-clusters with limited memory. Our performance study over a number of real and synthetic data sets demonstrates the effectiveness and efficiency of our method.},
+	author = {Cao, Feng and Ester, Martin and Qian, Weining and Zhou, Aoying},
+	booktitle = {Proceedings of the 2006 SIAM International Conference on Data Mining (SDM)},
+	chapter = {},
+	doi = {10.1137/1.9781611972764.29},
+	eprint = {https://epubs.siam.org/doi/pdf/10.1137/1.9781611972764.29},
+	pages = {328–339},
+	title = {Density-Based Clustering over an Evolving Data Stream with Noise},
+	url = {https://epubs.siam.org/doi/abs/10.1137/1.9781611972764.29},
+	year = {2006}
+}
+
+@Article{missForest_geo_imputation,
+	AUTHOR = {Zhang, Shengkai and Gong, Li and Zeng, Qi and Li, Wenhao and Xiao, Feng and Lei, Jintao},
+	TITLE = {Imputation of GPS Coordinate Time Series Using missForest},
+	JOURNAL = {Remote Sensing},
+	VOLUME = {13},
+	YEAR = {2021},
+	NUMBER = {12},
+	ARTICLE-NUMBER = {2312},
+	URL = {https://www.mdpi.com/2072-4292/13/12/2312},
+	ISSN = {2072-4292},
+	ABSTRACT = {The global positioning system (GPS) can provide the daily coordinate time series to help geodesy and geophysical studies. However, due to logistics and malfunctioning, missing values are often “seen” in GPS time series, especially in polar regions. Acquiring a consistent and complete time series is the prerequisite for accurate and reliable statical analysis. Previous imputation studies focused on the temporal relationship of time series, and only a few studies used spatial relationships and/or were based on machine learning methods. In this study, we impute 20 Greenland GPS time series using missForest, which is a new machine learning method for data imputation. The imputation performance of missForest and that of four traditional methods are assessed, and the methods’ impacts on principal component analysis (PCA) are investigated. Results show that missForest can impute more than a 30-day gap, and its imputed time series has the least influence on PCA. When the gap size is 30 days, the mean absolute value of the imputed and true values for missForest is 2.71 mm. The normalized root mean squared error is 0.065, and the distance of the first principal component is 0.013. missForest outperforms the other compared methods. missForest can effectively restore the information of GPS time series and improve the results of related statistical processes, such as PCA analysis.},
+	DOI = {10.3390/rs13122312}
+}
+
+@comment{
+	Book
+}
+
+@book{pml,
+	author = {Murphy, Kevin P.},
+	publisher = {MIT Press},
+	title = {Probabilistic Machine Learning: An introduction},
+	url = {probml.ai},
+	year = {2022}
+}

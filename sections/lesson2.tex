@@ -28,24 +28,31 @@ One of the main problems in communication systems is traffic management, which i
 \subsubsection{Basis}
 
 A queueing system manages traffic for a population requesting it.
+Traffic is the amount of service time that has been provided to users along a period of time,
+so it is measured in Erlangs (E), where the unit (1 E) represents a single service being served along time,
+this is, the service time corresponds to time along it is being served.
 
-Traffic is the amount of service time that has been provided to users along a period of time, so it is measured in Erlangs (E), where the unit (1 E) represents a single service being served along time, this is, the service time corresponds to time along it is being served.
-
-A queueing system is parametrized through characteristics that are related to traffic management, such as number of users, load pattern, service characteristics and number of servers. We must then manage some performance criteria, like waiting time, blocking probability and costs.
+A queueing system is parametrized through characteristics that are related to traffic management,
+such as number of users, load pattern, service characteristics and number of servers.
+We must then manage some performance criteria,
+like waiting time, blocking probability and costs.
 
 \subsubsection{Parameters}
 
-The parameters characterizing a queueing system are the following (some of them are redundant since they represent the same information but in another way):
+The parameters characterizing a queueing system are the following
+(some of them are redundant since they represent the same information but in another way):
 
 \begin{itemize}
 	\item Arriving rate ($u$): Amount of incoming traffic. Random variable.
 	\item {
-		Mean arriving rate ($\lambda$): Mean value of amount of incoming traffic:
+		Mean arriving rate ($\lambda$): Mean value of amount of incoming traffic.
 
 		$$ E\{u\} = \lambda $$
 	}
 	\item {
-		Time between arrivals (r): Amount of time that passes between requested services. Random variable. Its average value can be estimated from mean arriving rate:
+		Time between arrivals (r): Amount of time that passes between requested services.
+		Random variable.
+		Its average value can be estimated from mean arriving rate.
 
 		$$ r = \frac{1}{u} \rightarrow E\{r\} = \frac{1}{\lambda} $$
 	}
@@ -56,7 +63,8 @@ The parameters characterizing a queueing system are the following (some of them 
 		$$ \lambda_a = \lambda \cdot ( 1 - P_B ) $$
 	}
 	\item {
-		Queue discipline (z): It is the way in which traffic is enqueued. Most common disciplines are:
+		Queue discipline (z): It is the way in which traffic is enqueued.
+		Most common disciplines are:
 
 		\begin{itemize}
 			\item {
@@ -94,7 +102,8 @@ The parameters characterizing a queueing system are the following (some of them 
 	}
 	\item Service rate ($\mu$): Rate services are completed at.
 	\item {
-		Service time ($s$). The amount of time a service takes to be completed. Random variable. Its average value can be estimated from service rate:
+		Service time ($s$). The amount of time a service takes to be completed. Random variable.
+		Its average value can be estimated from service rate:
 
 		$$ E\{s\} = \frac{1}{\mu} $$
 	}

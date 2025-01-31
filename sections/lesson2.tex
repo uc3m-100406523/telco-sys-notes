@@ -71,12 +71,13 @@ Queueing system are characterized by the following parameters
 	\item Number of servers ($c$): Number of resources to attend incoming traffic.
 	\item Blocking probability ($P_B$): Probability of system being stopped.
 	\item {
-		Queue discipline (z): It is the way in which traffic is enqueued.
+		Queue discipline ($z$): It is the way in which traffic is enqueued.
 		Most common disciplines are:
 
 		\begin{itemize}
 			\item {
-				First In First Out (FIFO) / First Come First Served (FCFS): A common queue, the first element that arrived is the first element that leaves the queue.
+				First In First Out (FIFO) / First Come First Served (FCFS): A common queue.
+				The first element that arrived is the first element that leaves the queue.
 
 				\begin{figure}[H]
 					\centering
@@ -91,7 +92,8 @@ Queueing system are characterized by the following parameters
 				\end{figure}
 			}
 			\item {
-				Last in First Out (LIFO) / Last Come First Served (LCFS): A common stack, the last element that arrived is the first element that leaves the queue.
+				Last in First Out (LIFO) / Last Come First Served (LCFS): A common stack.
+				The last element that arrived is the first element that leaves the queue.
 
 				\begin{figure}[H]
 					\centering
@@ -277,7 +279,10 @@ Parameters of this notation are:
 
 \subsubsection{Exponential distribution}
 
-The service time usually follows an exponential distribution, this is, we can estimate the probability that a user spends a time $t$ to be served with the density function $p_s(t)$. This also means that $p_s(t) \cdot 100\%$ of user will take a time $t$ to be served. We define the density function:
+The service time $s$ usually follows an exponential distribution,
+this is, we can estimate the probability that a user spends a time $t$ to be served with the density function $p_s(t)$.
+This also means that $p_s(t) \cdot 100\%$ of users will take a time $t$ to be served.
+We define the density function:
 
 $$
 	s \sim \operatorname{exp} (\mu) \leftrightarrow P(s = t) = p_s(t) =
@@ -325,7 +330,9 @@ $$
 
 \subsubsection{Poisson distribution}
 
-Arrival rate is usually modeled by a Poisson distribution, this is, we can estimate the probability of $k$ arrivals within a unit of time with the density function. This is because we consider that time between arrivals follows an exponential distribution:
+Arrival rate $u$ is usually modeled by a Poisson distribution,
+this is, we can estimate the probability of $k$ arrivals within a unit of time with the density function.
+This is because we consider that time between arrivals $r$ follows an exponential distribution:
 
 $$
 	r \sim \operatorname{exp} (\lambda) \rightarrow
@@ -346,6 +353,15 @@ $$
 		Poisson distribution
 	}
 \end{figure}
+
+Poisson distribution is also interesting to model arriving rate with more complex models.
+If we consider the arriving rate a combination of $N$ Poisson processes,
+the resulting process will also be modeled by a Poisson process with:
+
+$$
+	u = \sum_{i}^N u_i, u_i \sim \operatorname{Poi} (\lambda_i) \rightarrow
+	u \sim \operatorname{Poi} (\lambda), \lambda = \sum_{i}^N \lambda_i
+$$
 
 \subsection{Basic queueing models}
 
@@ -435,12 +451,11 @@ The rest of properties can be derived:
 
 		$$
 			\rho =
-			\frac {\gamma} {\mu \cdot c} \overset {\textrm{long-term}} {=}
 			\frac {\gamma} {\mu \cdot c} \overset {c=1} {=}
 			\frac {\gamma} {\mu} =
 			\gamma \cdot W_s =
 			L_s =
-			\left. A_c \right|_{\textrm{long-term}} < 1
+			A_c < 1
 		$$
 	}
 	\item {
@@ -637,11 +652,10 @@ The rest of properties can be derived:
 
 		$$
 			\rho =
-			\frac {\gamma} {\mu \cdot c} \overset {\textrm{long-term}} {=}
 			\frac {\gamma} {\mu \cdot c} =
 			\frac {\gamma \cdot W_s} {c} =
 			\frac {L_s} {c} =
-			\frac {\left. A_c \right|_{\textrm{long-term}}} {c}
+			\frac {A_c} {c}
 			< 1
 		$$
 	}
@@ -845,11 +859,10 @@ The rest of properties can be derived:
 
 		$
 			\rho =
-			\frac {\gamma} {\mu \cdot c} \overset {\textrm{long-term}} {=}
 			\frac {\gamma} {\mu \cdot c} =
 			\frac {\gamma \cdot W_s} {c} =
 			\frac {L_s} {c} =
-			\frac {\left. A_c \right|_{\textrm{long-term}}} {c}
+			\frac {A_c} {c}
 			< 1
 		$
 	}

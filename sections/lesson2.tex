@@ -7,9 +7,9 @@
 
 
 
-\section{Traffic modeling: queing theory and queueing systems}
+\section{Traffic modeling: queueing theory and queueing systems}
 
-One of the main problems in communication systems is traffic management, which is centered on using limited resources in order to achieve maximum performance. For this purpose, mathematical models are developed in which is called \textbf{queing theory}. The queueing theory is the mathematical study of waiting lines for which we must manage delay and congestion.
+One of the main problems in communication systems is traffic management, which is centered on using limited resources in order to achieve maximum performance. For this purpose, mathematical models are developed in which is called \textbf{queueing theory}. The queueing theory is the mathematical study of waiting lines for which we must manage delay and congestion.
 
 \begin{figure}[H]
 	\centering
@@ -25,8 +25,6 @@ One of the main problems in communication systems is traffic management, which i
 
 \subsection{Queueing systems}
 
-\subsubsection{Basis}
-
 A queueing system manages traffic for a population requesting it.
 Traffic is the amount of service time that has been provided to users along a period of time,
 so it is measured in Erlangs (E), where the unit (1 E) represents a single service being served along time,
@@ -37,31 +35,41 @@ such as number of users, load pattern, service characteristics and number of ser
 We must then manage some performance criteria,
 like waiting time, blocking probability and costs.
 
-\subsubsection{Parameters}
+\subsubsection{Parameters of queueing systems}
 
-The parameters characterizing a queueing system are the following
+Queueing system are characterized by the following parameters
 (some of them are redundant since they represent the same information but in another way):
 
 \begin{itemize}
-	\item Arriving rate ($u$): Amount of incoming traffic. Random variable.
 	\item {
-		Mean arriving rate ($\lambda$): Mean value of amount of incoming traffic.
-
-		$$ E\{u\} = \lambda $$
+		Arriving rate ($u$): It is the amount of incoming traffic,
+		this is, the number of requested services in a period of time.
+		It is a random variable that is sampled for a specific period of time.
 	}
 	\item {
-		Time between arrivals (r): Amount of time that passes between requested services.
-		Random variable.
+		Mean arriving rate ($\lambda$): Overall value of incoming traffic to the system.
+
+		$$ \lambda = E\{u\} $$
+	}
+	\item {
+		Time between arrivals (r): It is the time passed between requested services,
+		this, the average time between requested services for a period of time.
+		It is a random variable that is sampled for a specific period of time.
 		Its average value can be estimated from mean arriving rate.
 
 		$$ r = \frac{1}{u} \rightarrow E\{r\} = \frac{1}{\lambda} $$
 	}
-	\item Blocking probability ($P_B$): Probability of system being stopped.
 	\item {
-		Effective arrival rate ($\lambda_a$): Amount of incoming traffic if we discard the traffic that can't enter the queue due to blocking phenomenom.
-
-		$$ \lambda_a = \lambda \cdot ( 1 - P_B ) $$
+		Service time ($s$): The amount of time a service takes to be completed.
+		It is a random variable that is sampled for a specific requested service.
 	}
+	\item {
+		Service rate ($\mu$): Overall rate services take to be completed in the system.
+
+		$$ \mu = \frac{1}{E\{s\}} \leftrightarrow E\{s\} = \frac{1}{\mu} $$
+	}
+	\item Number of servers ($c$): Number of resources to attend incoming traffic.
+	\item Blocking probability ($P_B$): Probability of system being stopped.
 	\item {
 		Queue discipline (z): It is the way in which traffic is enqueued.
 		Most common disciplines are:
@@ -100,14 +108,6 @@ The parameters characterizing a queueing system are the following
 			\item Service In Random Order (SIRO): The next element leaving the system is randomly selected.
 		\end{itemize}
 	}
-	\item Service rate ($\mu$): Rate services are completed at.
-	\item {
-		Service time ($s$). The amount of time a service takes to be completed. Random variable.
-		Its average value can be estimated from service rate:
-
-		$$ E\{s\} = \frac{1}{\mu} $$
-	}
-	\item Number of servers ($c$): Number of serving machines to attend incoming traffic.
 \end{itemize}
 
 \begin{figure}[H]
@@ -122,39 +122,68 @@ The parameters characterizing a queueing system are the following
 	}
 \end{figure}
 
-\subsubsection{Derived magnitudes}
-
 Apart from paramaters, some aditional magnitudes derived from parameters will be useful when analyzing performance and developing solutions:
 
 \begin{itemize}
 	\item {
-		Offered traffic ($A_o$): It is the amount of traffic that is said to be dispatched.
+		Effective arrival rate ($\gamma$): Amount of incoming traffic if we discard the traffic that can't enter the queue due to blocking phenomenom.
+
+		$$ \gamma = \lambda \cdot ( 1 - P_B ) $$
+	}
+	\item {
+		Offered traffic ($A_o$): It is the amount of traffic that requested to the system.
 
 		$$ A_o = \frac {E\{s\}} {E\{r\}} = \frac {\lambda} {\mu} $$
 	}
 	\item {
 		Carried traffic ($A_c$): It is the amount of traffic that is finally dispatched due to blocking phenomenom.
 
-		$$ A_c = A_o \cdot ( 1 - P_B ) = \frac {\lambda_a} {\mu} = \frac {\lambda_a} {\mu} $$
+		$$ A_c = A_o \cdot ( 1 - P_B ) = \frac {\gamma} {\mu} = \frac {\gamma} {\mu} $$
 	}
 	\item {
-		Server utilization ($\rho$):
+		Server utilization ($\rho$): It is the fraffic offered to a single resource.
 
-		$$ \rho = \frac {A_c} {c} = \frac {\lambda_a} {\mu \cdot c} $$
+		$$ \rho = \frac {A_c} {c} = \frac {\gamma} {\mu \cdot c} $$
 	}
-	\item Number of users in the servers at instant $t$ ($N_s(t)$).
-	\item Number of users in the queue at instant $t$ ($N_q(t)$).
 	\item {
-		Number of users in the system at instant $t$ ($N(t)$):
+		Number of users in the servers:
 
-		$$ N(t) = N_s(t) + N_q(t) $$
+		\begin{itemize}
+			\item {
+				At instant $t$: $N_s(t)$
+			}
+			\item {
+				Continuous operation (steady state stationary regime): $N_s$
+			}
+		\end{itemize}
 	}
-	\item Number of users in the servers in continuous operation (steady state stationary regime) ($N_s$).
-	\item Number of users in the queue in continuous operation (steady state stationary regime) ($N_q$).
 	\item {
-		Number of users in the system in continuous operation (steady state stationary regime) ($N$):
+		Number of users in the queue:
 
-		$$ N = N_s + N_q $$
+		\begin{itemize}
+			\item {
+				At instant $t$: $N_q(t)$
+			}
+			\item {
+				Continuous operation (steady state stationary regime): $N_q$
+			}
+		\end{itemize}
+	}
+	\item {
+		Number of users in the system:
+
+		\begin{itemize}
+			\item {
+				At instant $t$:
+
+				$$ N(t) = N_s(t) + N_q(t) $$
+			}
+			\item {
+				Continuous operation (steady state stationary regime):
+
+				$$ N = N_s + N_q $$
+			}
+		\end{itemize}
 	}
 	\item {
 		Average number of users in the servers ($L_s$):
@@ -170,11 +199,6 @@ Apart from paramaters, some aditional magnitudes derived from parameters will be
 		Average number of users in the system ($L$):
 
 		$$ L = E\{N\} = L_s + L_q $$
-	}
-	\item {
-		Long-term average effective arrival rate ($\gamma$): Although this magnitude is used to demostrate Little's Law, in most of problems can be assumed to be the same as effective arrival rate $\lambda_a$.
-
-		$$ \gamma = \left. \lambda_a} \right|_{\textrm{long-term}} $$
 	}
 	\item {
 		Mean time in the servers ($W_s$):
@@ -195,25 +219,25 @@ Apart from paramaters, some aditional magnitudes derived from parameters will be
 
 \subsubsection{Little's Law}
 
-Little's Law relates the number of users in the system with traffic. Little proved that the long-term average number of users in the servers is equal to carried traffic:
+Little's Law relates the number of users in the system with traffic.
+Little proved that the long-term average number of users in the servers is equal to carried traffic.
 
 $$
-	\begin{Bmatrix}
+	\left.
+	\begin{matrix}
+		
 		L_s = \gamma \cdot W_s \\
 		L_q = \gamma \cdot W_q
-	\end{Bmatrix}
-	\rightarrow
-$$
-
-$$
+	\end{matrix}
+	\right\rbrace
 	\rightarrow
 	L = L_s + L_q = \gamma \cdot W_s + \gamma \cdot W_q = \gamma \cdot W
-	\rightarrow
 $$
 
+Then:
+
 $$
-	\rightarrow
-	\left. A_c \right|_{\textrm{long-term}} = \left. \frac {\lambda_a} {\mu} \right|_{\textrm{long-term}} = \gamma \cdot W_s = L_s
+	A_c = \frac {\gamma} {\mu} = \gamma \cdot W_s = L_s
 $$
 
 \subsubsection{Kendall-Lee notation}
@@ -335,44 +359,44 @@ The characteristics of this model are:
 	\item {
 		Time between arrivals follows exponential distribution, then, arrivals rate follows Poisson distribution:
 
-		$
+		$$
 			A = M \rightarrow r \sim \operatorname{exp} (\lambda) \rightarrow u \sim \operatorname{Poi} (\lambda)
-		$
+		$$
 	}
 	\item {
 		Service time follows exponential distribution:
 
-		$
+		$$
 			B = M \rightarrow s \sim \operatorname{exp} (\mu)
-		$
+		$$
 	}
 	\item {
 		One server:
 
-		$
+		$$
 			c = 1
-		$
+		$$
 	}
 	\item {
 		Infinite queue capacity:
 
-		$
+		$$
 			K = \infty
-		$
+		$$
 	}
 	\item {
 		Infinite population:
 
-		$
+		$$
 			m = \infty
-		$
+		$$
 	}
 	\item {
 		FIFO queue.
 
-		$
+		$$
 			z = FIFO
-		$
+		$$
 	}
 	\item A certain blocking probability ($P_B$).
 \end{itemize}
@@ -409,20 +433,20 @@ The rest of properties can be derived:
 	\item {
 		Server utilization (it must be less than one in order to have an stable system):
 
-		$
+		$$
 			\rho =
-			\frac {\lambda_a} {\mu \cdot c} \overset {\textrm{long-term}} {=}
+			\frac {\gamma} {\mu \cdot c} \overset {\textrm{long-term}} {=}
 			\frac {\gamma} {\mu \cdot c} \overset {c=1} {=}
 			\frac {\gamma} {\mu} =
 			\gamma \cdot W_s =
 			L_s =
 			\left. A_c \right|_{\textrm{long-term}} < 1
-		$
+		$$
 	}
 	\item {
 		Summation $S$:
 
-		$
+		$$
 			S =
 			\sum_{n=0}^{\infty} \left( \frac {\lambda} {\mu} \right)^n =
 			\sum_{n=0}^{\infty} A_o^n =
@@ -430,80 +454,80 @@ The rest of properties can be derived:
 			\sum_{n=0}^{\infty} \left( \frac {c \cdot \rho} {1 - P_B} \right)^n \overset {c=1, P_B=0} {=}
 			\sum_{n=0}^{\infty} \rho^n =
 			\frac {1} {1 - \rho}
-		$
+		$$
 	}
 	\item {
 		Probability of the server not being used:
 
-		$
+		$$
 			P_0 = \frac {1} {S} = 1 - \rho
-		$
+		$$
 	}
 	\item {
 		Probability of the server being used:
 
-		$
+		$$
 			P(n \geq 1) = 1 - P_0 = \rho
-		$
+		$$
 	}
 	\item {
 		Probability of the server being in any state:
 
-		$
+		$$
 			P(n \geq 1) = \rho = \sum_{n=1}^{\infty} P_n \rightarrow P_n = (1 - \rho) \cdot \rho^n
-		$
+		$$
 	}
 	\item {
 		Average number of users in the servers:
 
-		$
+		$$
 			L_s = \gamma \cdot W_s = \frac {\gamma} {\mu} = \rho
-		$
+		$$
 	}
 	\item {
 		Average number of users in the queue:
 
-		$
+		$$
 			L_q = \sum_{i=1}^{\infty} \left[ (i-1) \cdot P_i \right] =
 			\sum_{i=1}^{\infty} \left[ (i-1) \cdot (1-\rho) \cdot \rho^i \right] =
 			\frac {\rho^2} {1-\rho}
-		$
+		$$
 	}
 	\item {
 		Average number of users in the system:
 
-		$
+		$$
 			L = \sum_{i=1}^{\infty} \left[ i \cdot P_i \right] =
 			\sum_{i=1}^{\infty} \left[ i \cdot (1-\rho) \cdot \rho^i \right] =
 			\frac {\rho} {1-\rho}
-		$
+		$$
 	}
 	\item {
 		Mean time in servers:
 
-		$
+		$$
 			W_s = \frac {1} {\mu}
-		$
+		$$
 	}
 	\item {
 		Mean time in the queue:
 
-		$
+		$$
 			W_q = \frac {L_q} {\gamma} = \frac {\frac{\rho^2}{1-\rho}} {\frac{\rho}{W_s}} =
 			W_s \cdot \frac {\rho} {1-\rho} =
 			\frac {\rho} {\mu \cdot (1-\rho)} \overset {\rho=1} {=} \infty
-		$
+		$$
 	}
 	\item {
 		Mean time in the system:
 
-		$
+		$$
 			W =
 			W_s + W_q =
 			W_s + W_s \cdot \frac {\rho} {1-\rho} =
 			\frac {W_s} {1-\rho} =
 			\frac {1} {\mu \cdot (1-\rho)} \overset {\rho=1} {=} \infty
-		$
+		$$
 	}
 \end{itemize}
 
@@ -517,44 +541,44 @@ The characteristics of this model are:
 	\item {
 		Time between arrivals follows exponential distribution, then, arrivals rate follows Poisson distribution:
 
-		$
+		$$
 			A = M \rightarrow r \sim \operatorname{exp} (\lambda) \rightarrow u \sim \operatorname{Poi} (\lambda)
-		$
+		$$
 	}
 	\item {
 		Service time follows exponential distribution:
 
-		$
+		$$
 			B = M \rightarrow s \sim \operatorname{exp} (\mu)
-		$
+		$$
 	}
 	\item {
 		$c$ servers:
 
-		$
+		$$
 			c = c
-		$
+		$$
 	}
 	\item {
 		Infinite queue capacity:
 
-		$
+		$$
 			K = \infty
-		$
+		$$
 	}
 	\item {
 		Infinite population:
 
-		$
+		$$
 			m = \infty
-		$
+		$$
 	}
 	\item {
 		FIFO queue.
 
-		$
+		$$
 			z = FIFO
-		$
+		$$
 	}
 	\item A certain blocking probability ($P_B$).
 \end{itemize}
@@ -611,107 +635,107 @@ The rest of properties can be derived:
 	\item {
 		Server utilization (it must be less than one in order to have an stable system):
 
-		$
+		$$
 			\rho =
-			\frac {\lambda_a} {\mu \cdot c} \overset {\textrm{long-term}} {=}
+			\frac {\gamma} {\mu \cdot c} \overset {\textrm{long-term}} {=}
 			\frac {\gamma} {\mu \cdot c} =
 			\frac {\gamma \cdot W_s} {c} =
 			\frac {L_s} {c} =
 			\frac {\left. A_c \right|_{\textrm{long-term}}} {c}
 			< 1
-		$
+		$$
 	}
 	\item {
 		Summation $S$:
 
-		$
+		$$
 			S =
 			\sum_{n=0}^{c-1} \left( \frac {A_{o}^n} {n!} \right) + \frac {A_{o}^c} {c! \cdot (1-\rho)}
-		$
+		$$
 	}
 	\item {
 		Probability of the server not being used:
 
-		$
+		$$
 			P_0 = \frac {1} {S} = \frac {1} {\sum_{n=0}^{c-1} \left( \frac {A_{o}^n} {n!} \right) + \frac {A_{o}^c} {c! \cdot (1-\rho)}}
-		$
+		$$
 	}
 	\item {
 		Probability of the server being used:
 
-		$
+		$$
 			P(n \geq 1) = 1 - P_0 = 1 - \frac {1} {S}
-		$
+		$$
 	}
 	\item {
 		Probability of the server being in any state:
 
-		$
+		$$
 			P(n \geq 1) = 1 - \frac {1} {S} = \sum_{n=1}^{\infty} P_n \rightarrow
 			P_n = \frac {1} {S} \cdot \left( 1 - \frac {1} {S} \right)^n
-		$
+		$$
 	}
 	\item {
 		Probability of having to wait in the queue:
 
-		$
+		$$
 			P_{wait} = \operatorname{C}(A_o, c) = \frac {A_{o}^c} {c! \cdot (1-\rho)} P_0 =  \frac {A_{o}^c} { c! \cdot (1-\rho) \cdot \left( \sum_{n=0}^{c-1} \left( \frac {A_{o}^n} {n!} \right) + \frac {A_{o}^c} {c! \cdot (1-\rho)} \right) }
-		$
+		$$
 	}
 	\item {
 		Average number of users in the servers:
 
-		$
+		$$
 			L_s = \gamma \cdot W_s = \frac {\gamma} {\mu} = c \cdot \rho
-		$
+		$$
 	}
 	\item {
 		Average number of users in the queue:
 
-		$
+		$$
 			L_q = \frac {\rho} {1-\rho} \cdot \operatorname{C}(A_o, c)
-		$
+		$$
 	}
 	\item {
 		Average number of users in the system:
 
-		$
+		$$
 			L = c \cdot \rho + \frac {\rho} {1-\rho} \cdot \operatorname{C}(A_o, c)
-		$
+		$$
 	}
 	\item {
 		Mean time in servers:
 
-		$
+		$$
 			W_s = \frac {1} {\mu}
-		$
+		$$
 	}
 	\item {
 		Mean time in the queue:
 
-		$
+		$$
 			W_q =
 			\frac {W_s} {c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c) =
 			\frac {1} {\mu \cdot c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c)
-		$
+		$$
 	}
 	\item {
 		Mean time in the system:
 
-		$
+		$$
 			W =
 			W_s + W_q =
 			W_s + \frac {W_s} {c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c) =
 			\frac {1} {\mu} + \frac {1} {\mu \cdot c \cdot (1-\rho)} \cdot \operatorname{C}(A_o, c)
 			\overset {\rho=1} {=} \infty
-		$
+		$$
 	}
 	\item {
 		Distribution of mean time in the queue:
 
-		$
+		$$
 			P(W_q < t) = 1 - \operatorname{C}(A_o, c) \cdot e^{- c \cdot \mu \cdot (1-\rho) \cdot t}
-		$
+		$$
 	}
 \end{itemize}
 
@@ -725,16 +749,16 @@ The characteristics of this model are:
 	\item {
 		Time between arrivals follows exponential distribution, then, arrivals rate follows Poisson distribution:
 
-		$
+		$$
 			A = M \rightarrow r \sim \operatorname{exp} (\lambda) \rightarrow u \sim \operatorname{Poi} (\lambda)
-		$
+		$$
 	}
 	\item {
 		Service time follows exponential distribution:
 
-		$
+		$$
 			B = M \rightarrow s \sim \operatorname{exp} (\mu)
-		$
+		$$
 	}
 	\item {
 		$c$ servers:
@@ -821,7 +845,7 @@ The rest of properties can be derived:
 
 		$
 			\rho =
-			\frac {\lambda_a} {\mu \cdot c} \overset {\textrm{long-term}} {=}
+			\frac {\gamma} {\mu \cdot c} \overset {\textrm{long-term}} {=}
 			\frac {\gamma} {\mu \cdot c} =
 			\frac {\gamma \cdot W_s} {c} =
 			\frac {L_s} {c} =
@@ -976,7 +1000,7 @@ The rest of properties can be derived:
 		\hline
 		& $M/M/1$ & $M/M/c$ & $M/M/c/c$ \\
 		\hline
-		$\rho$ & $\frac {\lambda_a} {\mu} = A_c = L_s < 1$ & \multicolumn{2}{c|}{$\frac {\lambda_a} {\mu \cdot c} = \frac {A_c} {c} = \frac {L_s} {c} < 1$} \\
+		$\rho$ & $\frac {\gamma} {\mu} = A_c = L_s < 1$ & \multicolumn{2}{c|}{$\frac {\gamma} {\mu \cdot c} = \frac {A_c} {c} = \frac {L_s} {c} < 1$} \\
 		\hline
 		$S$ & $\frac {1} {1 - \rho}$ & $\sum_{n=0}^{c-1} \left( \frac {A_{o}^n} {n!} \right) + \frac {A_{o}^c} {c! \cdot (1-\rho)}$ & $\sum_{n=0}^{c} \left( \frac {A_{o}^n} {n!} \right)$ \\
 		\hline
@@ -986,11 +1010,11 @@ The rest of properties can be derived:
 		\hline
 		$P_n$ & $(1 - \rho) \cdot \rho^n$ & $\frac {1} {S} \cdot \left( 1 - \frac {1} {S} \right)^n$ & $\frac {\frac{A_{o}^n}{c!}} {\sum_{k=0}^c \left( \frac {A_{o}^k} {k!} \right)}$ \\
 		\hline
-		$L_s$ & $A_c = \frac {\lambda_a} {\mu} = \rho$ & \multicolumn{2}{c|}{$A_c = \frac {\lambda_a} {\mu} = c \cdot \rho$} \\
+		$L_s$ & $A_c = \frac {\gamma} {\mu} = \rho$ & \multicolumn{2}{c|}{$A_c = \frac {\gamma} {\mu} = c \cdot \rho$} \\
 		\hline
 		$L_q$ & $\frac {\rho^2} {1-\rho}$ & $\frac {\rho} {1-\rho} \cdot \operatorname{C}(A_o, c)$ & $0$ \\
 		\hline
-		$L$ & $\frac {\rho} {1-\rho}$ & $c \cdot \rho + \frac {\rho} {1-\rho} \cdot \operatorname{C}(A_o, c)$ & $L_s = A_c = \frac {\lambda_a} {\mu} = c \cdot \rho$ \\
+		$L$ & $\frac {\rho} {1-\rho}$ & $c \cdot \rho + \frac {\rho} {1-\rho} \cdot \operatorname{C}(A_o, c)$ & $L_s = A_c = \frac {\gamma} {\mu} = c \cdot \rho$ \\
 		\hline
 		$W_s$ & \multicolumn{3}{c|}{$\frac {1} {\mu}$} \\
 		\hline

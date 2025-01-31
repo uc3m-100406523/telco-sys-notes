@@ -42,18 +42,18 @@ The parameters characterizing a queueing system are the following (some of them 
 	\item {
 		Mean arriving rate ($\lambda$): Mean value of amount of incoming traffic:
 
-		$ E\{u\} = \lambda $
+		$$ E\{u\} = \lambda $$
 	}
 	\item {
 		Time between arrivals (r): Amount of time that passes between requested services. Random variable. Its average value can be estimated from mean arriving rate:
 
-		$ r = \frac{1}{u} \rightarrow E\{r\} = \frac{1}{\lambda} $
+		$$ r = \frac{1}{u} \rightarrow E\{r\} = \frac{1}{\lambda} $$
 	}
 	\item Blocking probability ($P_B$): Probability of system being stopped.
 	\item {
 		Effective arrival rate ($\lambda_a$): Amount of incoming traffic if we discard the traffic that can't enter the queue due to blocking phenomenom.
 
-		$ \lambda_a = \lambda \cdot ( 1 - P_B ) $
+		$$ \lambda_a = \lambda \cdot ( 1 - P_B ) $$
 	}
 	\item {
 		Queue discipline (z): It is the way in which traffic is enqueued. Most common disciplines are:
@@ -96,7 +96,7 @@ The parameters characterizing a queueing system are the following (some of them 
 	\item {
 		Service time ($s$). The amount of time a service takes to be completed. Random variable. Its average value can be estimated from service rate:
 
-		$ E\{s\} = \frac{1}{\mu} $
+		$$ E\{s\} = \frac{1}{\mu} $$
 	}
 	\item Number of servers ($c$): Number of serving machines to attend incoming traffic.
 \end{itemize}
@@ -121,66 +121,66 @@ Apart from paramaters, some aditional magnitudes derived from parameters will be
 	\item {
 		Offered traffic ($A_o$): It is the amount of traffic that is said to be dispatched.
 
-		$ A_o = \frac {E\{s\}} {E\{r\}} = \frac {\lambda} {\mu}$
+		$$ A_o = \frac {E\{s\}} {E\{r\}} = \frac {\lambda} {\mu} $$
 	}
 	\item {
 		Carried traffic ($A_c$): It is the amount of traffic that is finally dispatched due to blocking phenomenom.
 
-		$ A_c = A_o \cdot ( 1 - P_B ) = \frac {\lambda_a} {\mu} = \frac {\lambda_a} {\mu} $
+		$$ A_c = A_o \cdot ( 1 - P_B ) = \frac {\lambda_a} {\mu} = \frac {\lambda_a} {\mu} $$
 	}
 	\item {
 		Server utilization ($\rho$):
 
-		$ \rho = \frac {A_c} {c} = \frac {\lambda_a} {\mu \cdot c} $
+		$$ \rho = \frac {A_c} {c} = \frac {\lambda_a} {\mu \cdot c} $$
 	}
 	\item Number of users in the servers at instant $t$ ($N_s(t)$).
 	\item Number of users in the queue at instant $t$ ($N_q(t)$).
 	\item {
 		Number of users in the system at instant $t$ ($N(t)$):
 
-		$ N(t) = N_s(t) + N_q(t) $
+		$$ N(t) = N_s(t) + N_q(t) $$
 	}
 	\item Number of users in the servers in continuous operation (steady state stationary regime) ($N_s$).
 	\item Number of users in the queue in continuous operation (steady state stationary regime) ($N_q$).
 	\item {
 		Number of users in the system in continuous operation (steady state stationary regime) ($N$):
 
-		$ N = N_s + N_q $
+		$$ N = N_s + N_q $$
 	}
 	\item {
 		Average number of users in the servers ($L_s$):
 
-		$ L_s = E\{N_s\} $
+		$$ L_s = E\{N_s\} $$
 	}
 	\item {
 		Average number of users in the queue ($L_q$):
 
-		$ L_q = E\{N_q\} $
+		$$ L_q = E\{N_q\} $$
 	}
 	\item {
 		Average number of users in the system ($L$):
 
-		$ L = E\{N\} = L_s + L_q $
+		$$ L = E\{N\} = L_s + L_q $$
 	}
 	\item {
 		Long-term average effective arrival rate ($\gamma$): Although this magnitude is used to demostrate Little's Law, in most of problems can be assumed to be the same as effective arrival rate $\lambda_a$.
 
-		$ \gamma = \left. \lambda_a} \right|_{\textrm{long-term}} $
+		$$ \gamma = \left. \lambda_a} \right|_{\textrm{long-term}} $$
 	}
 	\item {
 		Mean time in the servers ($W_s$):
 
-		$ W_s = E\{s\} = \frac{1}{\mu} = \frac{L_s}{\gamma} $
+		$$ W_s = E\{s\} = \frac{1}{\mu} = \frac{L_s}{\gamma} $$
 	}
 	\item {
 		Mean time in the queue ($W_q$):
 
-		$ W_q = \frac {L_q} {\gamma} $
+		$$ W_q = \frac {L_q} {\gamma} $$
 	}
 	\item {
 		Mean time in the system ($W$):
 
-		$ W = W_s + W_q = \frac {L} {\gamma} $
+		$$ W = W_s + W_q = \frac {L} {\gamma} $$
 	}
 \end{itemize}
 

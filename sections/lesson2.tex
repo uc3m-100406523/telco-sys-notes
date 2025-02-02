@@ -1909,12 +1909,12 @@ They are commonly used to represent concepts related to power since they usually
 Absolute values need a reference:
 
 \begin{itemize}
-	\item $dBW$: Referred to Watts ($W$)
-	\item $dBm$: Referred to $mW$
-	\item $dB\mu$: Referred to $\mu W$
+	\item $\mathrm{dBW}$: Referred to Watts ($\mathrm{W}$)
+	\item $\mathrm{dBm}$: Referred to $\mathrm{mW}$
+	\item $\mathrm{dB\mu}$: Referred to $\mathrm{\mu W}$
 \end{itemize}
 
-Since the relation between them is an order of 3 ($30 dB$), we can convert between them by adding and subtracting $30 dB$.
+Since the relation between them is an order of 3 ($30 \mathrm{dB}$), we can convert between them by adding and subtracting $30 dB$.
 
 \begin{figure}[H]
 	\centering
@@ -1930,25 +1930,26 @@ Since the relation between them is an order of 3 ($30 dB$), we can convert betwe
 
 \subsection{Gains and losses}
 
-When a signal is transmitted ($p_{tx}$), it can be amplified with a certain gain ($g$) or suffer losses ($l$). The resulting power ($p_{rx}$) is the product by gains and division by losses:
+When a signal is transmitted ($P_{tx}$), it can be amplified with a certain gain ($G$) or suffer losses ($L$).
+The resulting power ($P_{rx}$) is the product by gains and division by losses:
 
 $$
-	p_{rx} = p_{tx} \cdot \frac {\prod_i g_i} {\prod_i l_i}
+	P_{rx} = P_{tx} \cdot \frac {\prod_i G_i} {\prod_i L_i}
 $$
 
 It is usually expressed in decibels:
 
 $$
-	P_{rx} = P_{tx} + \sum_i G_i - \sum_j L_j
+	P_{dB, rx} = P_{dB, tx} + \sum_i G_{dB, i} - \sum_j L_{dB, j}
 $$
 
 Where:
 
 \begin{itemize}
-	\item $P_{tx} = 10 \log (p_{tx})$
-	\item $P_{rx} = 10 \log (p_{rx})$
-	\item $G_i = 10 \log (g_i)$
-	\item $L_i = 10 \log (l_i)$
+	\item $P_{dB, tx} = 10 \log (P_{tx})$
+	\item $P_{dB, rx} = 10 \log (P_{rx})$
+	\item $G_{dB, i} = 10 \log (G_i)$
+	\item $L_{dB, i} = 10 \log (L_i)$
 \end{itemize}
 
 \subsection{Propagation}
@@ -1956,28 +1957,28 @@ Where:
 \subsubsection{Total propagation losses (in decibels)}
 
 $$
-	l_b = l_{bf} \cdot a_E
+	L_b = L_{bf} \cdot A_E
 $$
 
 $$
-	L_b = L_{bf} + A_E
+	L_{dB, b} = L_{dB, bf} + A_{dB, E}
 $$
 
 Where:
 
 \begin{itemize}
-	\item Free-space path loss: $l_{bf}$
-	\item Losses due to other factors: $a_E$
+	\item Free-space path loss: $L_{bf}$
+	\item Losses due to other factors: $A_E$
 \end{itemize}
 
 \subsubsection{Free-space path loss}
 
 $$
-	l_{bf} = \left( \frac {4 \pi d} {\lambda} \right)^2
+	L_{bf} = \left( \frac {4 \pi d} {\lambda} \right)^2
 $$
 
 $$
-	L_{bf} = 10 \log \left[ \left( \frac {4 \pi d} {\lambda} \right)^2 \right]
+	L_{dB, bf} = 10 \log \left[ \left( \frac {4 \pi d} {\lambda} \right)^2 \right]
 $$
 
 Where:
@@ -1990,11 +1991,11 @@ Where:
 \subsubsection{Free-space path loss (variable index)}
 
 $$
-	l_{bf} = \left( \frac {4 \pi d} {\lambda} \right)^n
+	L_{bf} = \left( \frac {4 \pi d} {\lambda} \right)^n
 $$
 
 $$
-	L_{bf} = 10 \log \left[ \left( \frac {4 \pi d} {\lambda} \right)^n \right]
+	L_{dB, bf} = 10 \log \left[ \left( \frac {4 \pi d} {\lambda} \right)^n \right]
 $$
 
 Where:
@@ -2008,11 +2009,11 @@ Where:
 \subsubsection{Antenna gain}
 
 $$
-	g = \eta \left( \frac {\pi D} {\lambda} \right)^2
+	G = \eta \left( \frac {\pi D} {\lambda} \right)^2
 $$
 
 $$
-	G = 10 \log \left[ \eta \left( \frac {\pi D} {\lambda} \right)^2 \right]
+	G_{dB} = 10 \log \left[ \eta \left( \frac {\pi D} {\lambda} \right)^2 \right]
 $$
 
 Where:
@@ -2028,11 +2029,11 @@ Where:
 \subsubsection{Noise power spectral density (adjusted to bandwidth)}
 
 $$
-	p_N = N = N_0 B = k T_0 B
+	P_N = N = N_0 B = k T_0 B
 $$
 
 $$
-	P_N = N_{dB} = 10 \log (N_0) + 10 \log (B) = 10 \log (k T_0 B)
+	P_{dB, N} = N_{dB} = 10 \log (N_0) + 10 \log (B) = 10 \log (k T_0 B)
 $$
 
 Where:
@@ -2046,11 +2047,11 @@ Where:
 \subsubsection{Carrier-to-noise ratio}
 
 $$
-	\left( \frac {C} {N} \right) = \frac {p_{rx}} {k T_0 B}
+	\left( \frac {C} {N} \right) = \frac {P_{rx}} {k T_0 B}
 $$
 
 $$
-	\left( \frac {C} {N} \right)_{dB} = P_{rx} + 10 \log \left( \frac {1} {T_0} \right) - 10 \log (k B)
+	\left( \frac {C} {N} \right)_{dB} = P_{dB, rx} + 10 \log \left( \frac {1} {T_0} \right) - 10 \log (k B)
 $$
 
 Where:
